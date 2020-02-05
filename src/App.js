@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
 import Home from "./components/Home/Home";
 import BookTrip from "./components/BookTrip/BookTrip";
 import Confirmation from "./components/BookTrip/Confirmation";
@@ -21,6 +21,29 @@ class App extends React.Component {
         };
     }
 
+    handleDateSubmit = () => {
+        console.log("time and date")
+        this.props.history.push("/confirmation")
+    }
+    
+    handleSubmitBooking = () => {
+        console.log("booked")
+        this.props.history.push("/")
+        // this.setState((prevState) => {
+        //     return {
+        //         ...prevState,
+        //         allTrips: [
+        //             {
+        //                 name:
+        //                 startDate:
+        //                 endDate:
+        //             }
+        //         ]
+        //     }
+        // })
+    }
+
+
     render() {
         return (
             <div className="App">
@@ -30,12 +53,16 @@ class App extends React.Component {
                         <Route
                             exact
                             path="/booking"
-                            render={() => <BookTrip />}
+                            render={() => <BookTrip
+                            handleDateSubmit={this.handleDateSubmit}
+                            />}
                         />
                         <Route
                             exact
                             path="/confirmation"
-                            render={() => <Confirmation />}
+                            render={() => <Confirmation 
+                            handleSubmitBooking={this.handleSubmitBooking}
+                            />}
                         />
                     </Switch>
                 </header>
@@ -44,4 +71,4 @@ class App extends React.Component {
     }
 }
 
-export default App;
+export default withRouter(App);

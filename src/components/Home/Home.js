@@ -13,7 +13,7 @@ class Home extends React.Component {
     }
     
     render() {
-        const { allTrips } = this.props;
+        const { trips } = this.props;
 
         return (
             <>
@@ -31,7 +31,7 @@ class Home extends React.Component {
                     <p>Sort by date</p>
                 </div>
 
-                <List allTrips={allTrips} />
+                <List trips={trips} />
             </>
         );
     }

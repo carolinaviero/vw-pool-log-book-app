@@ -12,46 +12,50 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            allTrips: [
+            trips: [
                 {
-                    id: 1,
-                    driver: "Manuel dos Santos",
-                    startDate: "2020-05-02 12:00:00",
-                    endDate: "2020-05-02 14:00:00",
-                    destination: "Oeiras",
-                    startMileage: "20000",
-                    endMileage: "20010",
-                    image: car1
+                    "id": 1,
+                    "name": "Ed Watson",
+                    "start_trip": "2020-02-02T12:00:00.000Z",
+                    "end_trip": "2020-02-02T14:00:00.000Z",
+                    "destination": "Rato",
+                    "car_start_mileage": 40672,
+                    "car_end_mileage": 40677,
+                    "car_id": 1,
+                    "image_url": car1
                 },
                 {
-                    id: 2,
-                    driver: "Mário Pinto",
-                    startDate: "2020-06-22 14:00:00",
-                    endDate: "2020-06-23 16:00:00",
-                    destination: "Sintra",
-                    startMileage: "18000",
-                    endMileage: "18020",
-                    image: car1
+                    "id": 2,
+                    "name": "Nuno Lima",
+                    "start_trip": "2020-02-03T14:00:00.000Z",
+                    "end_trip": "2020-02-03T16:00:00.000Z",
+                    "destination": "Alameda",
+                    "car_start_mileage": 50672,
+                    "car_end_mileage": 50677,
+                    "car_id": 2,
+                    "image_url": car2
                 },
                 {
-                    id: 3,
-                    driver: "Pedro Pinto",
-                    startDate: "2020-06-22 16:00:00",
-                    endDate: "2020-06-23 17:00:00",
-                    destination: "Sintra",
-                    startMileage: "18000",
-                    endMileage: "18020",
-                    image: car1
+                    "id": 3,
+                    "name": "Carolina Viero",
+                    "start_trip": "2020-02-03T18:00:00.000Z",
+                    "end_trip": "2020-02-03T20:00:00.000Z",
+                    "destination": "Alameda",
+                    "car_start_mileage": 50677,
+                    "car_end_mileage": 50682,
+                    "car_id": 2,
+                    "image_url": car1
                 },
                 {
-                    id: 4,
-                    driver: "João Pinto",
-                    startDate: "2020-06-22 12:00:00",
-                    endDate: "2020-06-23 13:00:00",
-                    destination: "Sintra",
-                    startMileage: "18000",
-                    endMileage: "18020",
-                    image: car2
+                    "id": 4,
+                    "name": "Angélina Riet",
+                    "start_trip": "2020-02-04T12:00:00.000Z",
+                    "end_trip": "2020-02-04T14:00:00.000Z",
+                    "destination": "Rato",
+                    "car_start_mileage": 40677,
+                    "car_end_mileage": 40682,
+                    "car_id": 1,
+                    "image_url": car1
                 }
             ],
             filterBy: "",
@@ -68,14 +72,14 @@ class App extends React.Component {
         this.setState(prevState => {
             return this.state.sortByDate === "desc"
                 ? {
-                      ...prevState.allTrips.sort(
-                          (a, b) => moment(a.startDate) - moment(b.startDate)
+                      ...prevState.trips.sort(
+                          (a, b) => moment(a.start_trip) - moment(b.start_trip)
                       ),
                       sortByDate: "asc"
                   }
                 : {
-                      ...prevState.allTrips.sort(
-                          (a, b) => moment(b.startDate) - moment(a.startDate)
+                      ...prevState.trips.sort(
+                          (a, b) => moment(b.start_trip) - moment(a.start_trip)
                       ),
                       sortByDate: "desc"
                   };
@@ -104,7 +108,7 @@ class App extends React.Component {
     };
 
     render() {
-        const { allTrips } = this.state;
+        const { trips } = this.state;
 
         return (
             <div className="App">
@@ -115,7 +119,7 @@ class App extends React.Component {
                             path="/"
                             render={() => (
                                 <Home
-                                    allTrips={allTrips}
+                                    trips={trips}
                                     onSortByDate={this.handleSortByDate}
                                 />
                             )}

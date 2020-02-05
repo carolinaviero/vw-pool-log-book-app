@@ -9,7 +9,7 @@ class Trip extends React.Component {
         return (
             <div className="tripContainer">
                 {/* <div class="tripCarImage" style={{ backgroundImage: `url(${trip.image})` }}></div> */}
-                <img className="tripCarImage" src={trip.image_url} alt=""/>
+                <img className="tripCarImage" src={trip.img_url} alt=""/>
                 
                 <div className="tripSeeMore">
                     <Link to="">see more...</Link>

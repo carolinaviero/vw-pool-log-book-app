@@ -1,6 +1,6 @@
 import React from "react";
 import "./List.css";
-import moment from "moment";
+// import moment from "moment";
 import Trip from "./Trip";
 
 class List extends React.Component {

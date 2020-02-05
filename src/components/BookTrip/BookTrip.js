@@ -5,8 +5,14 @@ class BookTrip extends React.Component {
 
     handleDateSubmitHelper = (e) => {
         e.preventDefault();
-        this.props.handleDateSubmit();
-    }
+        // const date = e.target.date.value;
+        // const startTime = e.target.startTime.value;
+        // const endTime = e.target.endTime.value;
+        const date = "2020-02-03"
+        const startTime = "19:59"
+        const endTime = "21:30"
+        this.props.handleDateSubmit(date, startTime, endTime);
+    };
 
     render() {
         return (
@@ -18,11 +24,16 @@ class BookTrip extends React.Component {
                 <div>Please select a date and time:</div>
                 <div>
                     <form onSubmit={this.handleDateSubmitHelper}> 
-                    <label htmlFor="date">Date: </label> 
+                        <label htmlFor="date">Date: </label> 
                         <input id="date" type="date" name="date" />
-                    <label htmlFor="time">Time: </label>
-                        <input id="time" type="time" name="time" />
-                    <input type="submit" value="Submit"/>
+                        
+                        <label htmlFor="startTime">Start time: </label>
+                        <input id="startTime" type="time" name="startTime" />
+
+                        <label htmlFor="endTime">Estimated end time: </label>
+                        <input id="endTime" type="time" name="endTime" />
+                        
+                        <input type="submit" value="Submit"/>
                     </form>
                 </div>
             </>

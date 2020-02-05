@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
 import moment from "moment";
 import Home from "./components/Home/Home";
 import BookTrip from "./components/BookTrip/BookTrip";
@@ -60,7 +60,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        // sort trips arr by date 
+        // sort trips arr by date
         // sort((a, b) => moment(b.startDate) - moment(a.startDate))
     }
 
@@ -71,21 +71,40 @@ class App extends React.Component {
                       ...prevState.allTrips.sort(
                           (a, b) => moment(a.startDate) - moment(b.startDate)
                       ),
-                      sortByDate: "asc",
+                      sortByDate: "asc"
                   }
                 : {
                       ...prevState.allTrips.sort(
                           (a, b) => moment(b.startDate) - moment(a.startDate)
                       ),
-                      sortByDate: "desc",
+                      sortByDate: "desc"
                   };
         });
+    };
+    handleDateSubmit = () => {
+        console.log("time and date");
+        this.props.history.push("/confirmation");
+    };
+
+    handleSubmitBooking = () => {
+        console.log("booked");
+        this.props.history.push("/");
+        // this.setState((prevState) => {
+        //     return {
+        //         ...prevState,
+        //         allTrips: [
+        //             {
+        //                 name:
+        //                 startDate:
+        //                 endDate:
+        //             }
+        //         ]
+        //     }
+        // })
     };
 
     render() {
         const { allTrips } = this.state;
-
-        console.log(this.state);
 
         return (
             <div className="App">
@@ -94,17 +113,32 @@ class App extends React.Component {
                         <Route
                             exact
                             path="/"
-                            render={() => <Home allTrips={allTrips} onSortByDate={this.handleSortByDate} />}
+                            render={() => (
+                                <Home
+                                    allTrips={allTrips}
+                                    onSortByDate={this.handleSortByDate}
+                                />
+                            )}
                         />
                         <Route
                             exact
                             path="/booking"
-                            render={() => <BookTrip />}
+                            render={() => (
+                                <BookTrip
+                                    handleDateSubmit={this.handleDateSubmit}
+                                />
+                            )}
                         />
                         <Route
                             exact
                             path="/confirmation"
-                            render={() => <Confirmation />}
+                            render={() => (
+                                <Confirmation
+                                    handleSubmitBooking={
+                                        this.handleSubmitBooking
+                                    }
+                                />
+                            )}
                         />
                     </Switch>
                 </header>
@@ -113,4 +147,4 @@ class App extends React.Component {
     }
 }
 
-export default App;
+export default withRouter(App);

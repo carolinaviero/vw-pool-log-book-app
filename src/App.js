@@ -1,9 +1,12 @@
 import React from "react";
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
+import moment from "moment";
 import Home from "./components/Home/Home";
 import BookTrip from "./components/BookTrip/BookTrip";
 import Confirmation from "./components/BookTrip/Confirmation";
+import car1 from "./media/car-1.png";
+import car2 from "./media/car-2.png";
 
 class App extends React.Component {
     constructor(props) {
@@ -11,22 +14,88 @@ class App extends React.Component {
         this.state = {
             allTrips: [
                 {
-                  name: 'Manuel dos Santos',
-                  startDate: '05/02/2020 12:00:00',
-                  endDate: '05/02/2020 14:00:00',
-                  startMileage: '20000',
-                  endMileage: '20010'
+                    id: 1,
+                    driver: "Manuel dos Santos",
+                    startDate: "2020-05-02 12:00:00",
+                    endDate: "2020-05-02 14:00:00",
+                    destination: "Oeiras",
+                    startMileage: "20000",
+                    endMileage: "20010",
+                    image: car1
+                },
+                {
+                    id: 2,
+                    driver: "Mário Pinto",
+                    startDate: "2020-06-22 14:00:00",
+                    endDate: "2020-06-23 16:00:00",
+                    destination: "Sintra",
+                    startMileage: "18000",
+                    endMileage: "18020",
+                    image: car1
+                },
+                {
+                    id: 3,
+                    driver: "Pedro Pinto",
+                    startDate: "2020-06-22 16:00:00",
+                    endDate: "2020-06-23 17:00:00",
+                    destination: "Sintra",
+                    startMileage: "18000",
+                    endMileage: "18020",
+                    image: car1
+                },
+                {
+                    id: 4,
+                    driver: "João Pinto",
+                    startDate: "2020-06-22 12:00:00",
+                    endDate: "2020-06-23 13:00:00",
+                    destination: "Sintra",
+                    startMileage: "18000",
+                    endMileage: "18020",
+                    image: car2
                 }
-              ]
+            ],
+            filterBy: "",
+            sortByDate: "desc"
         };
     }
 
+    componentDidMount() {
+        // sort trips arr by date 
+        // sort((a, b) => moment(b.startDate) - moment(a.startDate))
+    }
+
+    handleSortByDate = () => {
+        this.setState(prevState => {
+            return this.state.sortByDate === "desc"
+                ? {
+                      ...prevState.allTrips.sort(
+                          (a, b) => moment(a.startDate) - moment(b.startDate)
+                      ),
+                      sortByDate: "asc",
+                  }
+                : {
+                      ...prevState.allTrips.sort(
+                          (a, b) => moment(b.startDate) - moment(a.startDate)
+                      ),
+                      sortByDate: "desc",
+                  };
+        });
+    };
+
     render() {
+        const { allTrips } = this.state;
+
+        console.log(this.state);
+
         return (
             <div className="App">
                 <header className="App-header">
                     <Switch>
-                        <Route exact path="/" render={() => <Home />} />
+                        <Route
+                            exact
+                            path="/"
+                            render={() => <Home allTrips={allTrips} onSortByDate={this.handleSortByDate} />}
+                        />
                         <Route
                             exact
                             path="/booking"

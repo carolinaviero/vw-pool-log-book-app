@@ -1,0 +1,26 @@
+.tripContainer {
+    /* border: solid 2px red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.tripCarImage {
+    max-width: 25vw;
+    max-height: 140px;
+    align-self: center;
+    /* background-size: cover;  */
+    /* background-repeat: no-repeat, repeat; */
+}
+
+.tripSeeMore {
+    align-self: flex-end;
+}
+
+.tripTextContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}

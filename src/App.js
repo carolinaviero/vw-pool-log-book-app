@@ -8,7 +8,17 @@ import Confirmation from "./components/BookTrip/Confirmation";
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            allTrips: [
+                {
+                  name: 'Manuel dos Santos',
+                  startDate: '05/02/2020 12:00:00',
+                  endDate: '05/02/2020 14:00:00',
+                  startMileage: '20000',
+                  endMileage: '20010'
+                }
+              ]
+        };
     }
 
     render() {

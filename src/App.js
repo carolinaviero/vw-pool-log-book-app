@@ -5,6 +5,7 @@ import moment from "moment";
 import Home from "./components/Home/Home";
 import BookTrip from "./components/BookTrip/BookTrip";
 import Confirmation from "./components/BookTrip/Confirmation";
+import TripDetails from "./components/Home/TripDetails";
 // import car1 from "./media/car-1.png";
 // import car2 from "./media/car-2.png";
 
@@ -18,7 +19,7 @@ class App extends React.Component {
                     "driver": "Ed Watson",
                     "start_trip": "2020-02-02T12:00:00.000Z",
                     "end_trip": "2020-02-02T14:00:00.000Z",
-                    "destination": "Rato",
+                    "destination": "Alverca do Ribatejo",
                     "car_start_mileage": 40672,
                     "car_end_mileage": 40677,
                     "car_id": 1,
@@ -42,7 +43,7 @@ class App extends React.Component {
                     "driver": "Carolina Viero",
                     "start_trip": "2020-02-03T18:00:00.000Z",
                     "end_trip": "2020-02-03T20:00:00.000Z",
-                    "destination": "Alameda",
+                    "destination": "Vila Nova de Mil Fontes",
                     "car_start_mileage": 50677,
                     "car_end_mileage": 50682,
                     "car_id": 1,
@@ -54,7 +55,7 @@ class App extends React.Component {
                     "driver": "Angélina Riet",
                     "start_trip": "2020-02-04T12:00:00.000Z",
                     "end_trip": "2020-02-04T14:00:00.000Z",
-                    "destination": "Rato",
+                    "destination": "Beja",
                     "car_start_mileage": 40677,
                     "car_end_mileage": 40682,
                     "car_id": 1,
@@ -193,6 +194,13 @@ class App extends React.Component {
                                         this.handleSubmitBooking
                                     }
                                 />
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/details/:tripId"
+                            render={(routeParams) => (
+                                <TripDetails trip={trips.find(trip => trip.id == routeParams.match.params.tripId)}/>
                             )}
                         />
                     </Switch>

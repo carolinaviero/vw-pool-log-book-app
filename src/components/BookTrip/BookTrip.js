@@ -1,17 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-class Home extends React.Component {
+class BookTrip extends React.Component {
     render() {
         return (
             <>
-                <div>Home Component</div>
+                <div>BookTrip Component</div>
                 <div>
-                    <Link to="/booking">Booking</Link>
+                    <Link to="/confirmation">Confirmation</Link>
                 </div>
             </>
         );
     }
 }
 
-export default Home;
+export default BookTrip;

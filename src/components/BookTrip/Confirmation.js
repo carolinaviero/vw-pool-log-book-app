@@ -1,17 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-class Home extends React.Component {
+class Confirmation extends React.Component {
     render() {
         return (
             <>
-                <div>Home Component</div>
+                <div>Confirmation Component</div>
                 <div>
-                    <Link to="/booking">Booking</Link>
+                    <Link to="/">Home</Link>
                 </div>
             </>
         );
     }
 }
 
-export default Home;
+export default Confirmation;

@@ -149,3 +149,8 @@
   color: white !important;
   margin-left: 5px;
 }
+
+.hideButton { 
+  opacity: .5;
+  cursor: none!important;
+}

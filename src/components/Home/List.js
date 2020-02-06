@@ -1,6 +1,5 @@
 import React from "react";
 import "./List.css";
-// import moment from "moment";
 import Trip from "./Trip";
 
 // EW: This works on logic found here https://codepen.io/nunosoares/pen/OeRvXv

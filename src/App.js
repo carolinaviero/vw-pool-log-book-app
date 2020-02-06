@@ -160,6 +160,13 @@ class App extends React.Component {
             width="225"
             height="36"
           ></img>
+          <img
+            className="vwds-logo-mobile"
+            src="images/logo-mobile.png"
+            alt="VW Digital Solutions logo - VDS with a red background"
+            width="36"
+            height="36"
+          ></img>
         </nav>
 
         <div className="App">

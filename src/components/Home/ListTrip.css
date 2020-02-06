@@ -7,20 +7,9 @@
   padding: 5%;
 }
 
-.listContainer {
-  background-color: #f6f6fb;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 5%;
-}
-
 #page-numbers {
   list-style: none;
   display: flex;
-  justify-content: center;
-  line-height: 50px;
 }
 
 #page-numbers > li {
@@ -31,5 +20,5 @@
 }
 
 #page-numbers .active {
-  color: #a41a4c;
+  color: #601539;
 }

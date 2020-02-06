@@ -42,7 +42,7 @@ class Trip extends React.Component {
 
               <div className="startdestination"> RATO LISBON</div>
               <div className="startday">
-                {moment(start_trip).format("D of MMM, YYYY")}
+                {moment(start_trip).format("D MMM YYYY")}
               </div>
             </div>
             <div class="trip-card-arrow">
@@ -52,7 +52,7 @@ class Trip extends React.Component {
               <div className="endtime"> {moment(end_trip).format("H:mm")}</div>
               <div className="enddestination">{destination}</div>
               <div className="endday">
-                {moment(end_trip).format("D of MMM, YYYY")}
+                {moment(end_trip).format("D MMM YYYY")}
               </div>
             </div>
             <div class="trip-card-start-trip">

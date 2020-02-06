@@ -1,19 +1,25 @@
 import React from "react";
 import "./Trip.css";
 import moment from "moment";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import MapModal from "./MapModal";
 
 class Trip extends React.Component {
     render() {
-        const { id, img_url, driver, start_trip, end_trip, destination } = this.props.trip;
+        const { trip, isModalVisible, handleModalVisibility } = this.props;
+        const { id, img_url, driver, start_trip, end_trip, destination } = trip;
         
         return (
             <div className="tripContainer">
                 {/* <div class="tripCarImage" style={{ backgroundImage: `url(${trip.image})` }}></div> */}
                 <img className="tripCarImage" src={img_url} alt=""/>
                 
-                <div className="tripSeeMore">
+                {/* <div className="tripSeeMore">
                     <Link to={`/details/${id}`}>see more...</Link>
+                </div> */}
+
+                <div className="tripSeeMore">
+                    <p onClick={() => handleModalVisibility(true, trip)}>see more...</p>
                 </div>
 
                 <div className="tripTextContainer">
@@ -34,7 +40,8 @@ class Trip extends React.Component {
                 <div className="tripTextContainer">
                     <label htmlFor="route">Route:&nbsp;</label>
                     <p id="route">Rato Lisbon - {destination}</p>
-                </div>                
+                </div>
+
             </div>
         );
     }

@@ -5,12 +5,20 @@ import Trip from "./Trip";
 
 class List extends React.Component {
     render() {
-        const { trips } = this.props;
+        const { trips, isModalVisible, handleModalVisibility } = this.props;
+
         return (
             <>
                 <div>List Component</div>
                 <div className="listContainer">
-                    {trips.map(trip => <Trip key={trip.id} trip={trip} />)}
+                    {trips.map(trip => (
+                        <Trip
+                            key={trip.id}
+                            trip={trip}
+                            isModalVisible={isModalVisible}
+                            handleModalVisibility={handleModalVisibility}
+                        />
+                    ))}
                 </div>
             </>
         );

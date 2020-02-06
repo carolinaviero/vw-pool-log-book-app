@@ -13,7 +13,7 @@ class Home extends React.Component {
     };
     
     render() {
-        const { trips, tripsFilteredByDriver } = this.props;
+        const { trips, tripsFilteredByDriver, isModalVisible, handleModalVisibility } = this.props;
 
         return (
             <>
@@ -29,6 +29,7 @@ class Home extends React.Component {
                     {trips
                         // get all unique drivers in trips and render their names in the select
                         .reduce((acc, curr) => [...acc, acc.includes(curr.driver) ? null : curr.driver], [])
+                        .sort()
                         .map(driver => driver && <option key={driver} value={driver}>{driver}</option>)}
                 </select>
                 
@@ -36,7 +37,9 @@ class Home extends React.Component {
                     <p>Sort by date</p>
                 </div>
 
-                <List trips={tripsFilteredByDriver.length ? tripsFilteredByDriver : trips} />
+                <List trips={tripsFilteredByDriver.length ? tripsFilteredByDriver : trips} 
+                    isModalVisible={isModalVisible} 
+                    handleModalVisibility={handleModalVisibility} />
             </>
         );
     }

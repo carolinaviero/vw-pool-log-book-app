@@ -6,6 +6,7 @@ import Home from "./components/Home/Home";
 import BookTrip from "./components/BookTrip/BookTrip";
 import Confirmation from "./components/BookTrip/Confirmation";
 import TripDetails from "./components/Home/TripDetails";
+import MapModal from "./components/Home/MapModal";
 // import car1 from "./media/car-1.png";
 // import car2 from "./media/car-2.png";
 
@@ -78,7 +79,9 @@ class App extends React.Component {
             availableCars: [],
             filteredTripsByDriver: [],
             filterByDriver: "all",
-            sortByDate: "desc"
+            sortByDate: "desc",
+            isModalVisible: false,
+            selectedTrip: {},
         };
     }
 
@@ -86,6 +89,17 @@ class App extends React.Component {
         // sort trips arr by date
         // sort((a, b) => moment(b.startDate) - moment(a.startDate))
     }
+
+    // Toggle modal visibility
+    handleModalVisibility = (bool, trip) => {
+        console.log("HERE", trip)
+        this.setState(
+            {
+                isModalVisible: bool,
+                selectedTrip: trip,
+            }
+        )
+    };
 
     // Sorting and filtering
     handleSortByDate = () => {
@@ -179,12 +193,16 @@ class App extends React.Component {
     };
 
     render() {
-        const { trips, filterByDriver } = this.state;
+        const { trips, filterByDriver, isModalVisible, selectedTrip } = this.state;
 
         return (
             <div className="App">
                 <header className="App-header">
                     <Switch>
+                        {isModalVisible && <MapModal trip={selectedTrip}
+                            isModalVisible={isModalVisible}
+                            handleModalVisibility={this.handleModalVisibility} />}
+
                         <Route
                             exact
                             path="/"
@@ -194,6 +212,8 @@ class App extends React.Component {
                                     tripsFilteredByDriver={filterByDriver !== "all" ? trips.filter(trip => trip.driver === filterByDriver) : []}
                                     onSortByDate={this.handleSortByDate}
                                     onFilterByDriver={this.handleFilterByDriver}
+                                    isModalVisible={isModalVisible}
+                                    handleModalVisibility={this.handleModalVisibility}
                                 />
                             )}
                         />
@@ -205,7 +225,7 @@ class App extends React.Component {
                                     handleDateSubmit={this.handleDateSubmit}
                                 />
                             )}
-                        />
+                        />isModalVisible
                         <Route
                             exact
                             path="/confirmation"
@@ -224,6 +244,7 @@ class App extends React.Component {
                                 <TripDetails trip={trips.find(trip => trip.id === +routeParams.match.params.tripId)}/>
                             )}
                         />
+
                     </Switch>
                 </header>
             </div>

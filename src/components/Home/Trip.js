@@ -20,7 +20,7 @@ class Trip extends React.Component {
     return (
       <>
         {/* <Link to={`/details/${id}`}> */}
-        <div onClick={() => handleModalVisibility(true, trip)}>
+        <div>
           <div className="trip-card-parent">
             <div className="trip-card-car-image">
               {" "}
@@ -47,6 +47,13 @@ class Trip extends React.Component {
             </div>
             <div class="trip-card-arrow">
               <span class="trip-arrow"> &#x27F7;</span>
+              <br />
+              <div
+                class="viewmaplink"
+                onClick={() => handleModalVisibility(true, trip)}
+              >
+                VIEW ROUTE >
+              </div>
             </div>
             <div class="trip-card-end-destination">
               <div className="endtime"> {moment(end_trip).format("H:mm")}</div>

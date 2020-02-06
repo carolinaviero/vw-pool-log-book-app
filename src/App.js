@@ -12,55 +12,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            trips: [
-                {
-                    "id": 0,
-                    "driver": "Ed Watson",
-                    "start_trip": "2020-02-05T12:00:00.000Z",
-                    "end_trip": "2020-02-05T18:00:00.000Z",
-                    "destination": "Ribamar",
-                    "car_start_mileage": 40672,
-                    "car_end_mileage": 40677,
-                    "car_id": 1,
-                    "plate": "PG-08-70",
-                    "img_url": "https://res.cloudinary.com/drm2ot7ge/image/upload/v1580913034/Volkswagen/Captura_de_ecr%C3%A3_2020-02-05_%C3%A0s_10.23.25_AM_jvl8ub.png"
-                },
-                {
-                    "id": 1,
-                    "driver": "Ed Watson",
-                    "start_trip": "2020-02-06T12:00:00.000Z",
-                    "end_trip": "2020-02-06T18:00:00.000Z",
-                    "destination": "Alverca do Ribatejo",
-                    "car_start_mileage": 40672,
-                    "car_end_mileage": 40677,
-                    "car_id": 1,
-                    "plate": "PG-08-70",
-                    "img_url": "https://res.cloudinary.com/drm2ot7ge/image/upload/v1580913034/Volkswagen/Captura_de_ecr%C3%A3_2020-02-05_%C3%A0s_10.23.25_AM_jvl8ub.png"
-                },
-                {
-                    "id": 3,
-                    "destination": "Alameda",
-                    "start_trip": "2020-02-05T12:00:00.000Z",
-                    "end_trip": "2020-02-05T18:00:00.000Z",
-                    "car_start_mileage": 50672,
-                    "car_end_mileage": 50677,
-                    "car_id": 2,
-                    "plate": "PG-09-77",
-                    "img_url": "https://res.cloudinary.com/drm2ot7ge/image/upload/v1580913034/Volkswagen/Captura_de_ecr%C3%A3_2020-02-05_%C3%A0s_10.24.23_AM_nxoeww.png"
-                },
-                {
-                    "id": 4,
-                    "destination": "Vila Nova de Mil Fontes",
-                    "start_trip": "2020-03-05T12:00:00.000Z",
-                    "end_trip": "2020-03-05T15:00:00.000Z",
-                    "car_start_mileage": 50677,
-                    "car_end_mileage": 50682,
-                    "car_id": 2,
-                    "plate": "PG-09-77",
-                    "img_url": "https://res.cloudinary.com/drm2ot7ge/image/upload/v1580913034/Volkswagen/Captura_de_ecr%C3%A3_2020-02-05_%C3%A0s_10.24.23_AM_nxoeww.png"
-                },
-                
-            ],
+            trips: [],
             cars: [],
             availableCars: [],
             filteredTripsByDriver: [],
@@ -70,8 +22,8 @@ class App extends React.Component {
     }
 
     async componentDidMount() {
-        const { cars } = await tripsHelper();
-        this.setState({ cars });
+        const { trips, cars } = await tripsHelper();
+        this.setState({ trips, cars });
         // sort trips arr by date
         // sort((a, b) => moment(b.startDate) - moment(a.startDate))
     }
@@ -201,8 +153,6 @@ class App extends React.Component {
             isModalVisible,
             selectedTrip
         } = this.state;
-
-        // console.log(this.state.cars);
 
         return (
             <>

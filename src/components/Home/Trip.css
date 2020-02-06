@@ -27,6 +27,7 @@
 }
 
 .trip-card-parent {
+  cursor: pointer;
   margin: 7px;
   display: grid;
   max-width: 298px;

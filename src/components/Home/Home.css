@@ -1,0 +1,12 @@
+.filters{
+    margin: 20px;
+}
+
+#sort-by-date-filter{
+    cursor: pointer;
+    margin: 5px;
+}
+
+#sort-by-date-filter:hover{
+    color: #601539;
+}

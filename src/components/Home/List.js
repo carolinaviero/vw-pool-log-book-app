@@ -8,9 +8,9 @@ class List extends React.Component {
     const { trips, handleModalVisibility } = this.props;
     return (
       <>
-        <p>
+        {/* <p>
           <em>Sorted by date</em>
-        </p>
+        </p> */}
         <div className="listContainer">
           {trips.map(trip => (
             <Trip

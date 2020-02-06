@@ -16,6 +16,11 @@
   font-family: "VWAG The Sans";
 }
 
+/* this is the smaller mobile logo, which we only display in responsive mode */
+.vwds-logo-mobile {
+  display: none;
+}
+
 body {
   margin-left: 5%;
   margin-right: 5%;
@@ -122,4 +127,14 @@ footer {
   line-height: 60px;
   color: #4a4a4a;
   background-color: #f5f5f5;
+}
+
+@media screen and (max-width: 700px) {
+  .vwds-logo-mobile {
+    display: block;
+  }
+
+  .vwds-logo {
+    display: none;
+  }
 }

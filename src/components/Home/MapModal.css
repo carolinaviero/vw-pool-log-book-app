@@ -1,0 +1,48 @@
+.mapModalContainer {
+    display: flex;
+}
+
+.mapModalButton {
+    position: relative;
+    justify-content: center;
+    top: 10px;
+    right: 20px;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    width:50px;
+	height:50px;
+    border-radius: 50%;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    background-color: #a41a4c;
+}
+
+.mapModalButton:hover {
+    background-color: #601539 !important;
+  }
+
+.mapModalTitle {
+    margin: 0 auto;
+    padding: 20px 0 20px 0;
+    color: #000000;
+}
+
+.mapModalBackground {
+    position: fixed;  
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    background-color:rgba(246, 246, 251, 0.8);   
+}
+
+.mapModalContainer {
+    padding: 20px 90px 20px 90px;
+    margin: 0 auto;
+}
+
+.Overlay{
+ background-color: red;
+}

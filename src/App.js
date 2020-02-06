@@ -4,7 +4,6 @@ import { Switch, Route, withRouter } from "react-router-dom";
 import moment from "moment";
 import Home from "./components/Home/Home";
 import BookTrip from "./components/BookTrip/BookTrip";
-import Confirmation from "./components/BookTrip/Confirmation";
 import TripDetails from "./components/Home/TripDetails";
 // import car1 from "./media/car-1.png";
 // import car2 from "./media/car-2.png";
@@ -203,17 +202,7 @@ class App extends React.Component {
                             render={() => (
                                 <BookTrip
                                     handleDateSubmit={this.handleDateSubmit}
-                                />
-                            )}
-                        />
-                        <Route
-                            exact
-                            path="/confirmation"
-                            render={() => (
-                                <Confirmation
-                                    handleSubmitBooking={
-                                        this.handleSubmitBooking
-                                    }
+                                    handleSubmitBooking={this.handleSubmitBooking}
                                 />
                             )}
                         />

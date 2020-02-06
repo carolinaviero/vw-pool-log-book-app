@@ -1,5 +1,5 @@
 .listContainer {
-  border: solid 2px #a41a4c;
+  background-color: #f6f6fb;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -5,46 +5,59 @@ import moment from "moment";
 import MapModal from "./MapModal";
 
 class Trip extends React.Component {
-    render() {
-        const { trip, isModalVisible, handleModalVisibility } = this.props;
-        const { id, img_url, driver, start_trip, end_trip, destination } = trip;
-        
-        return (
-            <div className="tripContainer">
-                {/* <div class="tripCarImage" style={{ backgroundImage: `url(${trip.image})` }}></div> */}
-                <img className="tripCarImage" src={img_url} alt=""/>
-                
-                {/* <div className="tripSeeMore">
-                    <Link to={`/details/${id}`}>see more...</Link>
-                </div> */}
+  render() {
+    const { trip, isModalVisible, handleModalVisibility } = this.props;
+    const { id, img_url, driver, start_trip, end_trip, destination } = trip;
 
-                <div className="tripSeeMore">
-                    <p onClick={() => handleModalVisibility(true, trip)}>see more...</p>
-                </div>
-
-                <div className="tripTextContainer">
-                    <label htmlFor="driver">Driver:&nbsp;</label>
-                    <span><p id="driver">{driver}</p></span>
-                </div>
-
-                <div className="tripTextContainer">
-                    <label htmlFor="start">Start:&nbsp;</label>
-                    <p id="start">{moment(start_trip).format("D of MMM, H:mm")}</p>
-                </div>                
-
-                <div className="tripTextContainer">
-                    <label htmlFor="end">End:&nbsp;</label>
-                    <p id="end">{moment(end_trip).format("D of MMM, H:mm")}</p>
-                </div>
-
-                <div className="tripTextContainer">
-                    <label htmlFor="route">Route:&nbsp;</label>
-                    <p id="route">Rato Lisbon - {destination}</p>
-                </div>
-
+    return (
+      <>
+        <Link to={`/details/${id}`}>
+          <div className="trip-card-parent">
+            <div className="trip-card-car-image">
+              {" "}
+              <img
+                className="tripCarImage"
+                src={img_url}
+                alt="car-volkswagon"
+              />
             </div>
-        );
-    }
+            <div className="trip-card-driver-and-license">
+              <div class="driver-name">{driver}</div>
+
+              <div class="license-plate"> PG-08-70</div>
+            </div>
+            <div className="trip-card-start-destination">
+              <div className="starttime">
+                {moment(start_trip).format("H:mm")}
+              </div>
+
+              <div className="startdestination"> RATO LISBON</div>
+              <div className="startday">
+                {moment(start_trip).format("D of MMM, YYYY")}
+              </div>
+            </div>
+            <div class="trip-card-arrow">
+              <span class="trip-arrow"> &#x27F7;</span>
+            </div>
+            <div class="trip-card-end-destination">
+              <div className="endtime"> {moment(end_trip).format("H:mm")}</div>
+              <div className="enddestination">{destination}</div>
+              <div className="endday">
+                {moment(end_trip).format("D of MMM, YYYY")}
+              </div>
+            </div>
+            <div class="trip-card-start-trip">
+              <div class="button">START TRIP</div>
+            </div>
+            <div class="trip-card-end-trip">
+              {" "}
+              <div class="button">END TRIP</div>
+            </div>
+          </div>
+        </Link>
+      </>
+    );
+  }
 }
 
 export default Trip;

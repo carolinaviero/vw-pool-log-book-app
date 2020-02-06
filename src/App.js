@@ -21,7 +21,7 @@ class App extends React.Component {
             isMapModalVisible: false,
             isStartModalVisible: false,
             selectedTrip: {},
-            typeOfModal: "",
+            typeOfModal: ""
         };
     }
 
@@ -34,7 +34,7 @@ class App extends React.Component {
     handleMapModalVisibility = (bool, trip) => {
         this.setState({
             isMapModalVisible: bool,
-            selectedTrip: trip,
+            selectedTrip: trip
         });
     };
 
@@ -42,9 +42,9 @@ class App extends React.Component {
         this.setState({
             isStartModalVisible: bool,
             selectedTrip: trip,
-            typeOfModal: type,
+            typeOfModal: type
         });
-    }
+    };
 
     // Sorting and filtering
     handleSortByDate = () => {
@@ -68,7 +68,7 @@ class App extends React.Component {
     handleFilterByDriver = driver => {
         this.setState({ filterByDriver: driver });
     };
-  
+
     // Boonking trips
     handleDateSubmit = (date, startTime, endTime) => {
         // turn strings to moment objects
@@ -80,20 +80,19 @@ class App extends React.Component {
         const now = moment().format();
         // TODO: alienate to helper file
         const bookedDatesByCar = this.state.trips.reduce((acc, curr) => {
-            const newTrip = curr.start_trip > now ? { start_trip: curr.start_trip, end_trip: curr.end_trip } : null;
+            const newTrip =
+                curr.start_trip > now
+                    ? { start_trip: curr.start_trip, end_trip: curr.end_trip }
+                    : null;
             return {
                 ...acc,
-                [curr.car_id]: newTrip ? 
-                    [
-                        ...(acc[curr.car_id] ? acc[curr.car_id] : []),
-                        newTrip
-                    ] : [
-                        ...(acc[curr.car_id] ? acc[curr.car_id] : []),
-                    ]
+                [curr.car_id]: newTrip
+                    ? [...(acc[curr.car_id] ? acc[curr.car_id] : []), newTrip]
+                    : [...(acc[curr.car_id] ? acc[curr.car_id] : [])]
             };
         }, {});
         console.log("Booked trips by car: ", bookedDatesByCar);
-        
+
         // check if selectd date and time overlaps any alerady booked trips
         // TODO alienate to helper file
         let unavailableCarIds = [];
@@ -117,69 +116,59 @@ class App extends React.Component {
                         (endTrip > currentCarStartTrip &&
                             endTrip < currentCarEndTrip) ||
                         (startTrip < currentCarStartTrip &&
-                            endTrip > currentCarEndTrip)    
+                            endTrip > currentCarEndTrip)
                     ) {
-                        // push car_id to unavailableCarIds arr if it's not already there 
-                        if (!unavailableCarIds.includes(Number(key))) unavailableCarIds.push(Number(key));
-                    } 
-                } 
+                        // push car_id to unavailableCarIds arr if it's not already there
+                        if (!unavailableCarIds.includes(Number(key)))
+                            unavailableCarIds.push(Number(key));
+                    }
+                }
             }
         }
         console.log("Unavailable car ids: ", unavailableCarIds);
 
         this.setState(
             prevState => ({
-                    ...prevState,
-                    availableCars: prevState.cars.filter(car => !unavailableCarIds.includes(car.id))
-                }),
-                () => console.log("Available cars: ", this.state.availableCars)
-            );
+                ...prevState,
+                availableCars: prevState.cars.filter(
+                    car => !unavailableCarIds.includes(car.id)
+                )
+            }),
+            () => console.log("Available cars: ", this.state.availableCars)
+        );
     };
 
     cleanAvailableCars = () => {
-        this.setState({ availableCars: [] })
-    };
-
-    handleSubmitBooking = () => {
-        console.log("booked");
-        this.props.history.push("/");
-        // this.setState((prevState) => {
-        //     return {
-        //         ...prevState,
-        //         allTrips: [
-        //             {
-        //                 name:
-        //                 startDate:
-        //                 endDate:
-        //             }
-        //         ]
-        //     }
-        // })
+        this.setState({ availableCars: [] });
     };
 
     // Start and end trips
     editTripSubmitHandler = (trip, mileage, type) => {
         // trip with mileage
-        const updatedTrip = type === "start" ?
-            { ...trip, car_start_mileage: mileage, car_end_mileage: mileage }
-            :
-            {...trip, car_end_mileage: mileage};
+        const updatedTrip =
+            type === "start"
+                ? {
+                      ...trip,
+                      car_start_mileage: mileage,
+                      car_end_mileage: mileage
+                  }
+                : { ...trip, car_end_mileage: mileage };
         // update the DB
         startTripHelperFn(updatedTrip);
-        // update the state with a new trips 
+        // update the state with a new trips
         this.setState(prevState => {
             const updatedTrips = prevState.trips.map(trip => {
                 if (trip.id === updatedTrip.id) {
                     return updatedTrip;
-                } 
-                return trip
+                }
+                return trip;
             });
             return {
                 ...prevState,
                 trips: updatedTrips,
                 isStartModalVisible: false,
                 selectedTrip: {}
-            }
+            };
         });
     };
 
@@ -209,7 +198,6 @@ class App extends React.Component {
                 <div className="App">
                     <header className="App-header">
                         <Switch>
-                            
                             {isStartModalVisible && (
                                 <StartModal
                                     type={typeOfModal}
@@ -218,7 +206,9 @@ class App extends React.Component {
                                     handleModalVisibility={
                                         this.handleEditModalVisibility
                                     }
-                                    onEditTripSubmit={this.editTripSubmitHandler}
+                                    onEditTripSubmit={
+                                        this.editTripSubmitHandler
+                                    }
                                 />
                             )}
 
@@ -255,7 +245,9 @@ class App extends React.Component {
                                         handleMapModalVisibility={
                                             this.handleMapModalVisibility
                                         }
-                                        handleEditModalVisibility={this.handleEditModalVisibility}
+                                        handleEditModalVisibility={
+                                            this.handleEditModalVisibility
+                                        }
                                     />
                                 )}
                             />
@@ -266,36 +258,18 @@ class App extends React.Component {
                                     <BookTrip
                                         handleDateSubmit={this.handleDateSubmit}
                                         availableCars={availableCars}
-                                        cleanAvailableCars={this.cleanAvailableCars}
-                                    />
-                                )}
-                            />
-                            {/* <Route
-                                exact
-                                path="/confirmation"
-                                render={() => (
-                                    <Confirmation
-                                        handleSubmitBooking={
-                                            this.handleSubmitBooking
+                                        cleanAvailableCars={
+                                            this.cleanAvailableCars
                                         }
-                                    />
-                                )}
-                            /> */}
-                            <Route
-                                exact
-                                path="/details/:tripId"
-                                render={routeParams => (
-                                    <TripDetails
-                                        trip={trips.find(
-                                            trip =>
-                                                trip.id ===
-                                                +routeParams.match.params.tripId
-                                        )}
                                     />
                                 )}
                             />
                         </Switch>
                     </header>
+                    <footer>
+                        CREATED AT THE WILD CODE SCHOOL LISBON HACKATHON FOR
+                        VWDS, © 2020.
+                    </footer>
                 </div>
             </>
         );

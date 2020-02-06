@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./BookTrip.css";
+import { Element, animateScroll as scroll, scroller } from 'react-scroll'
 
 class BookTrip extends React.Component {
     state = {
@@ -27,38 +29,75 @@ class BookTrip extends React.Component {
         this.props.handleDateSubmit(date, startTime, endTime);
     };
 
+    scrollToTop = () => scroll.scrollToTop();
+
+    scrollTo = () => {
+        scroller.scrollTo('scroll-to-element', {
+            duration: 1000,
+            delay: 0,
+            smooth: 'easeOutQuad'
+        })
+    }
+    
     render() {
         const { availableCars } = this.props;
-
+        console.log(this.state);
         return (
             <>
                 <h1>Book your Trip</h1>
                 <div className="button">
                     <Link to="/">Home</Link>
                 </div>
-                <h2>Select a date and time:</h2>
+                <h2>Please confirm your details:</h2>
                 <div>
                     <form onSubmit={this.handleSubmitBookingHelper}>
-                        <label htmlFor="date">Date: </label>
-                        <input onChange={this.handleInputChange} id="date" type="date" name="date" />
-
-                        <label htmlFor="startTime">Start time: </label>
-                        <input onChange={this.handleInputChange} id="startTime" type="time" name="startTime" />
-
-                        <label htmlFor="endTime">Estimated end time: </label>
-                        <input onChange={this.handleInputChange} id="endTime" type="time" name="endTime" />
-
                         <label htmlFor="name">Name: </label>
                         <input onChange={this.handleInputChange} id="name" type="text" name="driver" />
-                        
                         <label htmlFor="where">Destination: </label>
                         <input onChange={this.handleInputChange} id="where" type="text" name="destination" />
-
-                        <input type="submit" value="Submit" />
+                        <label htmlFor="date">Date: </label>
+                        <input onChange={this.handleInputChange} id="date" type="date" name="date" />
+                        <label htmlFor="startTime">Start time: </label>
+                        <input onChange={this.handleInputChange} id="startTime" type="time" name="startTime" />
+                        <label htmlFor="endTime">Estimated end time: </label>
+                        <input onChange={this.handleInputChange} id="endTime" type="time" name="endTime" />
+                        <div className="submit-button-div">
+                            <input type="submit" value="SUBMIT" className="submit-button" onClick={() => this.scrollTo()}/>
+                        </div>
                     </form>
                 </div>
 
-                {availableCars && availableCars.map(car => <h1>{car.plate} is available</h1>)}
+                <Element name="scroll-to-element" className="element">
+                    {
+                        availableCars.length ?  
+                        <div className="available-cars-text">
+                            <h2>{availableCars.length} available cars for selected dates:</h2> 
+                        </div>
+                        : 
+                        null
+                    }
+                    <div className="parent-car-container">
+                        {
+                            availableCars.map(car => 
+                                <div className="car-container">
+                                    <div className="book-card-car-image">
+                                    {" "}
+                                    <img
+                                        className="bookCarImage"
+                                        src={car.img_url_alternative}
+                                        alt={car.model}
+                                        />
+                                    </div>
+                                    <p className="make">{car.make}</p>
+                                    <h2>{car.model}</h2>
+                                    <p className="license-plate">{car.plate}</p>
+                                    <div className="book-button">
+                                        <div className="button">BOOK</div>
+                                    </div>
+                                </div>
+                            )}
+                    </div>
+                </Element>
             </>
         );
     }

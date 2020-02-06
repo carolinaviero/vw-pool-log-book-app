@@ -1,86 +1,129 @@
 import React from "react";
 import "./Trip.css";
 import moment from "moment";
+// import { Link } from "react-router-dom";
+import MapModal from "./MapModal";
 
 class Trip extends React.Component {
+    hasTripStartedButNotFinished = trip => {
+        return (
+            trip.car_start_mileage &&
+            trip.car_end_mileage &&
+            trip.car_start_mileage === trip.car_end_mileage
+        );
+    };
 
-  hasTripStartedButNotFinished = (trip) => {
-    return (trip.car_start_mileage && trip.car_end_mileage) && trip.car_start_mileage === trip.car_end_mileage;
-  };
-  
-  isTripFinished = (trip) => {
-    return trip.car_start_mileage < trip.car_end_mileage;
-  };
+    isTripFinished = trip => {
+        return trip.car_start_mileage < trip.car_end_mileage;
+    };
 
-  editModalVisibilityHelper = (bool, trip, type) => {
-    this.props.handleEditModalVisibility(bool, trip, type);
-  };
-    
-  render() {
-    const { trip, handleMapModalVisibility } = this.props;
-    const { img_url, driver, start_trip, end_trip, destination } = trip;
-    
-    return (
-      <>
-        <div className="trip-card-parent">
-          <div className="trip-card-car-image">
-            {" "}
-            <img
-              className="tripCarImage"
-              src={img_url}
-              alt="car-volkswagon"
-            />
-          </div>
-          <div className="trip-card-driver-and-license">
-            <div className="driver-name">{driver}</div>
+    editModalVisibilityHelper = (bool, trip, type) => {
+        this.props.handleEditModalVisibility(bool, trip, type);
+    };
 
-            <div className="license-plate"> PG-08-70</div>
-          </div>
-          <div className="trip-card-start-destination">
-            <div className="starttime">
-              {moment(start_trip).format("H:mm")}
-            </div>
-
-            <div className="startdestination"> RATO LISBON</div>
-            <div className="startday">
-              {moment(start_trip).format("D of MMM, YYYY")}
-            </div>
-          </div>
-          <div className="trip-card-arrow">
-            <span className="trip-arrow"> &#x27F7;</span>
-          </div>
-          <div className="trip-card-end-destination">
-            <div className="endtime"> {moment(end_trip).format("H:mm")}</div>
-            <div className="enddestination">{destination}</div>
-            <div className="endday">
-              {moment(end_trip).format("D of MMM, YYYY")}
-            </div>
-          </div>
-        
-          <div className="trip-card-start-trip">
-            <div className={this.hasTripStartedButNotFinished(trip) || this.isTripFinished(trip) ? "button hideButton" : "button"}
-              onClick={() => this.editModalVisibilityHelper(true, trip, "start")}
-              >
-                START TRIP
-              </div>
-          </div>
-          <div className="trip-card-end-trip">
-            {" "}
-            <div className={this.isTripFinished(trip) || !this.hasTripStartedButNotFinished(trip) ? "button hideButton" : "button"}
-              onClick={() => this.editModalVisibilityHelper(true, trip, "end")}
-              >
-                END TRIP
-              </div>
-          </div>
-          
-          <div>
-            <a onClick={() => handleMapModalVisibility(true, trip)} href="@">View map...</a>
-          </div>
-        
-        </div>
-      </>
-    );
-  }
+    render() {
+        const { trip, handleModalVisibility } = this.props;
+        const {
+            id,
+            img_url,
+            driver,
+            start_trip,
+            end_trip,
+            destination,
+            plate
+        } = trip;
+        return (
+            <>
+                {/* <Link to={`/details/${id}`}> */}
+                <div>
+                    <div className="trip-card-parent">
+                        <div className="trip-card-car-image">
+                            {" "}
+                            <img
+                                className="tripCarImage"
+                                src={img_url}
+                                alt="car-volkswagon"
+                            />
+                        </div>
+                        <div className="trip-card-driver-and-license">
+                            <div class="driver-name">{driver}</div>
+                            <div class="license-plate"> {plate}</div>
+                        </div>
+                        <div className="trip-card-start-destination">
+                            <div className="starttime">
+                                {moment(start_trip).format("H:mm")}
+                            </div>
+                            <div className="startdestination"> RATO LISBON</div>
+                            <div className="startday">
+                                {moment(start_trip).format("D MMM YYYY")}
+                            </div>
+                        </div>
+                        <div class="trip-card-arrow">
+                            <span class="trip-arrow"> &#x27F7;</span>
+                            <br />
+                            <div
+                                class="viewmaplink"
+                                onClick={() =>
+                                    handleModalVisibility(true, trip)
+                                }
+                            >
+                                VIEW ROUTE >
+                            </div>
+                        </div>
+                        <div class="trip-card-end-destination">
+                            <div className="endtime">
+                                {" "}
+                                {moment(end_trip).format("H:mm")}
+                            </div>
+                            <div className="enddestination">{destination}</div>
+                            <div className="endday">
+                                {moment(end_trip).format("D MMM YYYY")}
+                            </div>
+                        </div>
+                        <div className="trip-card-start-trip">
+                            <div
+                                className={
+                                    this.hasTripStartedButNotFinished(trip) ||
+                                    this.isTripFinished(trip)
+                                        ? "button hideButton"
+                                        : "button"
+                                }
+                                onClick={() =>
+                                    this.editModalVisibilityHelper(
+                                        true,
+                                        trip,
+                                        "start"
+                                    )
+                                }
+                            >
+                                START TRIP
+                            </div>
+                        </div>
+                        <div className="trip-card-end-trip">
+                            {" "}
+                            <div
+                                className={
+                                    this.isTripFinished(trip) ||
+                                    !this.hasTripStartedButNotFinished(trip)
+                                        ? "button hideButton"
+                                        : "button"
+                                }
+                                onClick={() =>
+                                    this.editModalVisibilityHelper(
+                                        true,
+                                        trip,
+                                        "end"
+                                    )
+                                }
+                            >
+                                END TRIP
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* </Link> */}
+            </>
+        );
+    }
 }
-
 export default Trip;

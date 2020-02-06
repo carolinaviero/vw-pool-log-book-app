@@ -1,6 +1,5 @@
 import React from "react";
 import "./List.css";
-// import moment from "moment";
 import Trip from "./Trip";
 
 class List extends React.Component {
@@ -8,7 +7,9 @@ class List extends React.Component {
     const { trips, handleMapModalVisibility, handleEditModalVisibility } = this.props;
     return (
       <>
-        <h2>Booked Trips</h2>
+        {/* <p>
+          <em>Sorted by date</em>
+        </p> */}
         <div className="listContainer">
           {trips.map(trip => (
             <Trip key={trip.id} 

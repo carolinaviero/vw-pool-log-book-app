@@ -2,18 +2,28 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 class BookTrip extends React.Component {
+    state = {
+        date: "2020-03-05",
+        startTime: "15:00",
+        endTime: "19:00",
+        driver: "Nuno",
+        destination: "Porto",
+    };
+
     componentWillUnmount() {
         this.props.cleanAvailableCars();
     }
     
+    handleInputChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    };
+
     handleSubmitBookingHelper = e => {
         e.preventDefault();
-        // const date = e.target.date.value;
-        // const startTime = e.target.startTime.value;
-        // const endTime = e.target.endTime.value;
-        const date = "2020-03-05";
-        const startTime = "15:00";
-        const endTime = "19:00";
+        // const date = "2020-03-05";
+        // const startTime = "15:00";
+        // const endTime = "19:00";
+        const { date, startTime, endTime } = this.state;
         this.props.handleDateSubmit(date, startTime, endTime);
     };
 
@@ -28,32 +38,23 @@ class BookTrip extends React.Component {
                 </div>
                 <h2>Select a date and time:</h2>
                 <div>
-                    <form onSubmit={this.handleDateSubmitHelper}>
+                    <form onSubmit={this.handleSubmitBookingHelper}>
                         <label htmlFor="date">Date: </label>
-                        <input id="date" type="date" name="date" />
+                        <input onChange={this.handleInputChange} id="date" type="date" name="date" />
 
                         <label htmlFor="startTime">Start time: </label>
-                        <input id="startTime" type="time" name="startTime" />
+                        <input onChange={this.handleInputChange} id="startTime" type="time" name="startTime" />
 
                         <label htmlFor="endTime">Estimated end time: </label>
-                        <input id="endTime" type="time" name="endTime" />
+                        <input onChange={this.handleInputChange} id="endTime" type="time" name="endTime" />
+
+                        <label htmlFor="name">Name: </label>
+                        <input onChange={this.handleInputChange} id="name" type="text" name="driver" />
+                        
+                        <label htmlFor="where">Destination: </label>
+                        <input onChange={this.handleInputChange} id="where" type="text" name="destination" />
 
                         <input type="submit" value="Submit" />
-                    </form>
-                </div>
-                <div>
-                    Available cars: (available cars for the chosen date and time
-                        bookingwill be displayed here)
-                </div>
-                <div>
-                    <div>Please confirm your details:</div>
-                    <form onSubmit={this.handleSubmitBookingHelper}>
-                        <label htmlFor="name">Name: </label>
-                        <input id="name" type="text" />
-                        <label htmlFor="where">Destination: </label>
-                        <input id="destination" type="text" />
-
-                        <input type="submit" value="Confirm Booking" />
                     </form>
                 </div>
 

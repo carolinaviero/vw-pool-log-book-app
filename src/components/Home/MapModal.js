@@ -22,7 +22,7 @@ Modal.setAppElement("#root");
 class MapModal extends React.Component {
     render() {
         const { trip, isModalVisible, handleModalVisibility } = this.props;
-        const { driver, destination, start_trip: startTrip, end_trip: endTrip } = trip;
+        const { driver, destination } = trip;
 
         return (
             <>

@@ -6,7 +6,8 @@ import Home from "./components/Home/Home";
 import BookTrip from "./components/BookTrip/BookTrip";
 import TripDetails from "./components/Home/TripDetails";
 import MapModal from "./components/Home/MapModal";
-import { tripsHelper } from "./helpers/tripsHelper";
+import StartModal from "./components/Home/StartModal";
+import { tripsHelperFn, startTripHelperFn } from "./helpers/tripsHelper";
 
 class App extends React.Component {
     constructor(props) {
@@ -15,26 +16,35 @@ class App extends React.Component {
             trips: [],
             cars: [],
             availableCars: [],
-            filteredTripsByDriver: [],
             filterByDriver: "all",
-            sortByDate: "desc"
+            sortByDate: "desc",
+            isMapModalVisible: false,
+            isStartModalVisible: false,
+            selectedTrip: {},
+            typeOfModal: "",
         };
     }
 
     async componentDidMount() {
-        const { trips, cars } = await tripsHelper();
+        const { trips, cars } = await tripsHelperFn();
         this.setState({ trips, cars });
-        // sort trips arr by date
-        // sort((a, b) => moment(b.startDate) - moment(a.startDate))
     }
 
-    // Toggle modal visibility
-    handleModalVisibility = (bool, trip) => {
+    // Handle modals visibility
+    handleMapModalVisibility = (bool, trip) => {
         this.setState({
-            isModalVisible: bool,
-            selectedTrip: trip
+            isMapModalVisible: bool,
+            selectedTrip: trip,
         });
     };
+
+    handleEditModalVisibility = (bool, trip, type) => {
+        this.setState({
+            isStartModalVisible: bool,
+            selectedTrip: trip,
+            typeOfModal: type,
+        });
+    }
 
     // Sorting and filtering
     handleSortByDate = () => {
@@ -68,6 +78,7 @@ class App extends React.Component {
 
         // get all booked hours by car that are in the future
         const now = moment().format();
+        // TODO: alienate to helper file
         const bookedDatesByCar = this.state.trips.reduce((acc, curr) => {
             const newTrip = curr.start_trip > now ? { start_trip: curr.start_trip, end_trip: curr.end_trip } : null;
             return {
@@ -84,6 +95,7 @@ class App extends React.Component {
         console.log("Booked trips by car: ", bookedDatesByCar);
         
         // check if selectd date and time overlaps any alerady booked trips
+        // TODO alienate to helper file
         let unavailableCarIds = [];
         for (const key in bookedDatesByCar) {
             for (let i = 0; i < bookedDatesByCar[key].length; i++) {
@@ -145,12 +157,40 @@ class App extends React.Component {
         // })
     };
 
+    // Start and end trips
+    editTripSubmitHandler = (trip, mileage, type) => {
+        // trip with mileage
+        const updatedTrip = type === "start" ?
+            { ...trip, car_start_mileage: mileage, car_end_mileage: mileage }
+            :
+            {...trip, car_end_mileage: mileage};
+        // update the DB
+        startTripHelperFn(updatedTrip);
+        // update the state with a new trips 
+        this.setState(prevState => {
+            const updatedTrips = prevState.trips.map(trip => {
+                if (trip.id === updatedTrip.id) {
+                    return updatedTrip;
+                } 
+                return trip
+            });
+            return {
+                ...prevState,
+                trips: updatedTrips,
+                isStartModalVisible: false,
+                selectedTrip: {}
+            }
+        });
+    };
+
     render() {
         const {
             trips,
             availableCars,
             filterByDriver,
-            isModalVisible,
+            isMapModalVisible,
+            isStartModalVisible,
+            typeOfModal,
             selectedTrip
         } = this.state;
 
@@ -169,12 +209,25 @@ class App extends React.Component {
                 <div className="App">
                     <header className="App-header">
                         <Switch>
-                            {isModalVisible && (
+                            
+                            {isStartModalVisible && (
+                                <StartModal
+                                    type={typeOfModal}
+                                    trip={selectedTrip}
+                                    isModalVisible={isStartModalVisible}
+                                    handleModalVisibility={
+                                        this.handleEditModalVisibility
+                                    }
+                                    onEditTripSubmit={this.editTripSubmitHandler}
+                                />
+                            )}
+
+                            {isMapModalVisible && (
                                 <MapModal
                                     trip={selectedTrip}
-                                    isModalVisible={isModalVisible}
+                                    isModalVisible={isMapModalVisible}
                                     handleModalVisibility={
-                                        this.handleModalVisibility
+                                        this.handleMapModalVisibility
                                     }
                                 />
                             )}
@@ -198,10 +251,11 @@ class App extends React.Component {
                                         onFilterByDriver={
                                             this.handleFilterByDriver
                                         }
-                                        isModalVisible={isModalVisible}
-                                        handleModalVisibility={
-                                            this.handleModalVisibility
+                                        isMapModalVisible={isMapModalVisible}
+                                        handleMapModalVisibility={
+                                            this.handleMapModalVisibility
                                         }
+                                        handleEditModalVisibility={this.handleEditModalVisibility}
                                     />
                                 )}
                             />

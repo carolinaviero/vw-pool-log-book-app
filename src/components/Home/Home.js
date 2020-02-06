@@ -13,7 +13,7 @@ class Home extends React.Component {
     };
     
     render() {
-        const { trips, tripsFilteredByDriver, isModalVisible, handleModalVisibility } = this.props;
+        const { trips, tripsFilteredByDriver, isModalVisible, handleMapModalVisibility, handleEditModalVisibility } = this.props;
 
         return (
             <>
@@ -39,7 +39,9 @@ class Home extends React.Component {
 
                 <List trips={tripsFilteredByDriver.length ? tripsFilteredByDriver : trips} 
                     isModalVisible={isModalVisible} 
-                    handleModalVisibility={handleModalVisibility} />
+                    handleMapModalVisibility={handleMapModalVisibility} 
+                    handleEditModalVisibility={handleEditModalVisibility}
+                    />
             </>
         );
     }

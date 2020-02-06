@@ -3,46 +3,66 @@ import { Link } from "react-router-dom";
 import List from "./List";
 
 class Home extends React.Component {
-    
-    handleFilterByDriver = (e) => {
-        this.props.onFilterByDriver(e.target.value)
-    };
+  handleFilterByDriver = e => {
+    this.props.onFilterByDriver(e.target.value);
+  };
 
-    handleSortByDate = () => {
-        this.props.onSortByDate();
-    };
-    
-    render() {
-        const { trips, tripsFilteredByDriver, isModalVisible, handleModalVisibility } = this.props;
+  handleSortByDate = () => {
+    this.props.onSortByDate();
+  };
 
-        return (
-            <>
-                <h1>Home Component</h1>
-                
-                <div className="button">
-                    <Link to="/booking">Booking</Link>
-                </div>
+  render() {
+    const {
+      trips,
+      tripsFilteredByDriver,
+      isModalVisible,
+      handleModalVisibility
+    } = this.props;
 
-                <label htmlFor="driverSelect">Filter by driver: </label>
-                <select id="driverSelect" onChange={this.handleFilterByDriver}>
-                    <option defaultValue>All</option>
-                    {trips
-                        // get all unique drivers in trips and render their names in the select
-                        .reduce((acc, curr) => [...acc, acc.includes(curr.driver) ? null : curr.driver], [])
-                        .sort()
-                        .map(driver => driver && <option key={driver} value={driver}>{driver}</option>)}
-                </select>
-                
-                <div onClick={this.handleSortByDate}>
-                    <p>Sort by date</p>
-                </div>
+    return (
+      <>
+        <h1>VWDS Car Pool</h1>
+        <div className="button">
+          <Link to="/booking">BOOK A TRIP</Link>
+        </div>
 
-                <List trips={tripsFilteredByDriver.length ? tripsFilteredByDriver : trips} 
-                    isModalVisible={isModalVisible} 
-                    handleModalVisibility={handleModalVisibility} />
-            </>
-        );
-    }
+        <br />
+        <h2>Current Trips</h2>
+
+        <label class="driver-select" htmlFor="driverSelect">
+          Filter by driver:{" "}
+        </label>
+
+        <select id="driverSelect" onChange={this.handleFilterByDriver}>
+          <option defaultValue>All</option>
+          {trips
+            // get all unique drivers in trips and render their names in the select
+            .reduce(
+              (acc, curr) => [
+                ...acc,
+                acc.includes(curr.driver) ? null : curr.driver
+              ],
+              []
+            )
+            .sort()
+            .map(
+              driver =>
+                driver && (
+                  <option key={driver} value={driver}>
+                    {driver}
+                  </option>
+                )
+            )}
+        </select>
+        <div onClick={this.handleSortByDate}></div>
+        <List
+          trips={tripsFilteredByDriver.length ? tripsFilteredByDriver : trips}
+          isModalVisible={isModalVisible}
+          handleModalVisibility={handleModalVisibility}
+        />
+      </>
+    );
+  }
 }
 
 export default Home;

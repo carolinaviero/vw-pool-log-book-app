@@ -8,10 +8,16 @@ class List extends React.Component {
     const { trips, handleModalVisibility } = this.props;
     return (
       <>
-        <h2>Booked Trips</h2>
+        <p>
+          <em>Sorted by date</em>
+        </p>
         <div className="listContainer">
           {trips.map(trip => (
-            <Trip key={trip.id} trip={trip} handleModalVisibility={handleModalVisibility} />
+            <Trip
+              key={trip.id}
+              trip={trip}
+              handleModalVisibility={handleModalVisibility}
+            />
           ))}
         </div>
       </>

@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import "./BookTrip.css";
 import { Element, animateScroll as scroll, scroller } from 'react-scroll'
+import moment from "moment";
 
 class BookTrip extends React.Component {
     state = {
@@ -26,8 +27,14 @@ class BookTrip extends React.Component {
         this.props.handleDateSubmit(date, startTime, endTime);
     };
 
-    handleBookTrip = () => {
-
+    handleBooking = (car_id, img_url, plate) => {
+        const { date, startTime, endTime, driver, destination } = this.state;
+        const start_trip = moment(`${date} ${startTime}:00`).format("YYYY-MM-DD HH:mm:ss");
+        const end_trip = moment(`${date} ${endTime}:00`).format("YYYY-MM-DD HH:mm:ss");
+        const id = Math.random() * 100;
+        const newBooking = { driver,  start_trip, end_trip, destination, car_start_mileage: 0, car_end_mileage: 0, car_id, plate, img_url, id };
+        this.props.onBooking(newBooking);
+        this.props.history.push("/");
     };
 
     scrollToTop = () => scroll.scrollToTop();
@@ -94,7 +101,7 @@ class BookTrip extends React.Component {
                                     <h2>{car.model}</h2>
                                     <p className="license-plate">{car.plate}</p>
                                     <div className="book-button">
-                                        <div className="button">BOOK</div>
+                                        <div className="button" onClick={() => this.handleBooking(car.id, car.img_url, car.plate)}>BOOK</div>
                                     </div>
                                 </div>
                             )}
@@ -105,4 +112,4 @@ class BookTrip extends React.Component {
     }
 }
 
-export default BookTrip;
+export default withRouter(BookTrip);

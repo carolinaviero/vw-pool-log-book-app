@@ -1,13 +1,13 @@
 import React from "react";
 import "./App.css";
 import { Switch, Route, withRouter, Link } from "react-router-dom";
+import { animateScroll as scroll } from "react-scroll";
 import moment from "moment";
 import Home from "./components/Home/Home";
 import BookTrip from "./components/BookTrip/BookTrip";
-import TripDetails from "./components/Home/TripDetails";
 import MapModal from "./components/Home/MapModal";
 import StartModal from "./components/Home/StartModal";
-import { tripsHelperFn, startTripHelperFn } from "./helpers/tripsHelper";
+import { tripsHelperFn, startTripHelperFn, bookingHelperFn } from "./helpers/tripsHelper";
 
 class App extends React.Component {
   constructor(props) {
@@ -30,13 +30,17 @@ class App extends React.Component {
     this.setState({ trips, cars });
   }
 
-  // Handle modals visibility
-  handleMapModalVisibility = (bool, trip) => {
-    this.setState({
-      isMapModalVisible: bool,
-      selectedTrip: trip
-    });
-  };
+    componentDidUpdate() {
+        scroll.scrollToTop();
+    }
+
+    // Handle modals visibility
+    handleMapModalVisibility = (bool, trip) => {
+        this.setState({
+            isMapModalVisible: bool,
+            selectedTrip: trip
+        });
+    };
 
   handleEditModalVisibility = (bool, trip, type) => {
     this.setState({
@@ -76,22 +80,22 @@ class App extends React.Component {
     const startTrip = moment(`${date} ${startTime}`);
     const endTrip = moment(`${date} ${endTime}`);
 
-    // get all booked hours by car that are in the future
-    const now = moment().format();
-    // TODO: alienate to helper file
-    const bookedDatesByCar = this.state.trips.reduce((acc, curr) => {
-      const newTrip =
-        curr.start_trip > now
-          ? { start_trip: curr.start_trip, end_trip: curr.end_trip }
-          : null;
-      return {
-        ...acc,
-        [curr.car_id]: newTrip
-          ? [...(acc[curr.car_id] ? acc[curr.car_id] : []), newTrip]
-          : [...(acc[curr.car_id] ? acc[curr.car_id] : [])]
-      };
-    }, {});
-    console.log("Booked trips by car: ", bookedDatesByCar);
+        // get all booked hours by car that are in the future
+        const now = moment().format();
+        // TODO: alienate to helper file
+        const bookedDatesByCar = this.state.trips.reduce((acc, curr) => {
+            const newTrip =
+                curr.start_trip > now
+                    ? { start_trip: curr.start_trip, end_trip: curr.end_trip }
+                    : null;
+            return {
+                ...acc,
+                [curr.car_id]: newTrip
+                    ? [...(acc[curr.car_id] ? acc[curr.car_id] : []), newTrip]
+                    : [...(acc[curr.car_id] ? acc[curr.car_id] : [])]
+            };
+        }, {});
+        // console.log("Booked trips by car: ", bookedDatesByCar);
 
     // check if selectd date and time overlaps any alerady booked trips
     // TODO alienate to helper file
@@ -117,24 +121,31 @@ class App extends React.Component {
               unavailableCarIds.push(Number(key));
           }
         }
-      }
-    }
-    console.log("Unavailable car ids: ", unavailableCarIds);
+        // console.log("Unavailable car ids: ", unavailableCarIds);
 
-    this.setState(
-      prevState => ({
-        ...prevState,
-        availableCars: prevState.cars.filter(
-          car => !unavailableCarIds.includes(car.id)
-        )
-      }),
-      () => console.log("Available cars: ", this.state.availableCars)
-    );
-  };
+        this.setState(
+            prevState => ({
+                ...prevState,
+                availableCars: prevState.cars.filter(
+                    car => !unavailableCarIds.includes(car.id)
+                )
+            })
+        );
+    };
 
-  cleanAvailableCars = () => {
-    this.setState({ availableCars: [] });
-  };
+    handleOnBooking = (trip) => {
+        bookingHelperFn(trip);
+        this.setState(prevState => (
+            {
+                ...prevState,
+                trips: [trip, ...prevState.trips],
+            }
+        ));
+    };
+
+    cleanAvailableCars = () => {
+        this.setState({ availableCars: [] });
+    };
 
   // Start and end trips
   editTripHandler = (trip, mileage, type) => {
@@ -226,45 +237,59 @@ class App extends React.Component {
                 />
               )}
 
-              <Route
-                exact
-                path="/"
-                render={() => (
-                  <Home
-                    trips={trips}
-                    tripsFilteredByDriver={
-                      filterByDriver !== "all"
-                        ? trips.filter(trip => trip.driver === filterByDriver)
-                        : []
-                    }
-                    onSortByDate={this.handleSortByDate}
-                    onFilterByDriver={this.handleFilterByDriver}
-                    isMapModalVisible={isMapModalVisible}
-                    handleMapModalVisibility={this.handleMapModalVisibility}
-                    handleEditModalVisibility={this.handleEditModalVisibility}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/booking"
-                render={() => (
-                  <BookTrip
-                    handleDateSubmit={this.handleDateSubmit}
-                    availableCars={availableCars}
-                    cleanAvailableCars={this.cleanAvailableCars}
-                  />
-                )}
-              />
-            </Switch>
-          </header>
-          <footer>
-            CREATED AT THE WILD CODE SCHOOL LISBON HACKATHON FOR VWDS, © 2020.
-          </footer>
-        </div>
-      </>
-    );
-  }
+                            <Route
+                                exact
+                                path="/"
+                                render={() => (
+                                    <Home
+                                        trips={trips}
+                                        tripsFilteredByDriver={
+                                            filterByDriver !== "all"
+                                                ? trips.filter(
+                                                      trip =>
+                                                          trip.driver ===
+                                                          filterByDriver
+                                                  )
+                                                : []
+                                        }
+                                        onSortByDate={this.handleSortByDate}
+                                        onFilterByDriver={
+                                            this.handleFilterByDriver
+                                        }
+                                        isMapModalVisible={isMapModalVisible}
+                                        handleMapModalVisibility={
+                                            this.handleMapModalVisibility
+                                        }
+                                        handleEditModalVisibility={
+                                            this.handleEditModalVisibility
+                                        }
+                                    />
+                                )}
+                            />
+                            <Route
+                                exact
+                                path="/booking"
+                                render={() => (
+                                    <BookTrip
+                                        handleDateSubmit={this.handleDateSubmit}
+                                        availableCars={availableCars}
+                                        cleanAvailableCars={
+                                            this.cleanAvailableCars
+                                        }
+                                        onBooking={this.handleOnBooking}
+                                    />
+                                )}
+                            />
+                        </Switch>
+                    </header>
+                    <footer>
+                        CREATED AT THE WILD CODE SCHOOL LISBON HACKATHON FOR
+                        VWDS, © 2020.
+                    </footer>
+                </div>
+            </>
+        );
+    }
 }
 
 export default withRouter(App);

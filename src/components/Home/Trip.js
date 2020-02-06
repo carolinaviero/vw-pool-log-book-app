@@ -1,8 +1,6 @@
 import React from "react";
 import "./Trip.css";
 import moment from "moment";
-// import { Link } from "react-router-dom";
-import MapModal from "./MapModal";
 
 class Trip extends React.Component {
     hasTripStartedButNotFinished = trip => {
@@ -22,9 +20,8 @@ class Trip extends React.Component {
     };
 
     render() {
-        const { trip, handleModalVisibility } = this.props;
+        const { trip, handleMapModalVisibility } = this.props;
         const {
-            id,
             img_url,
             driver,
             start_trip,
@@ -34,7 +31,6 @@ class Trip extends React.Component {
         } = trip;
         return (
             <>
-                {/* <Link to={`/details/${id}`}> */}
                 <div>
                     <div className="trip-card-parent">
                         <div className="trip-card-car-image">
@@ -46,8 +42,8 @@ class Trip extends React.Component {
                             />
                         </div>
                         <div className="trip-card-driver-and-license">
-                            <div class="driver-name">{driver}</div>
-                            <div class="license-plate"> {plate}</div>
+                            <div className="driver-name">{driver}</div>
+                            <div className="license-plate"> {plate}</div>
                         </div>
                         <div className="trip-card-start-destination">
                             <div className="starttime">
@@ -58,19 +54,19 @@ class Trip extends React.Component {
                                 {moment(start_trip).format("D MMM YYYY")}
                             </div>
                         </div>
-                        <div class="trip-card-arrow">
-                            <span class="trip-arrow"> &#x27F7;</span>
+                        <div className="trip-card-arrow">
+                            <span className="trip-arrow"> &#x27F7;</span>
                             <br />
                             <div
-                                class="viewmaplink"
+                                className="viewmaplink"
                                 onClick={() =>
-                                    handleModalVisibility(true, trip)
+                                    handleMapModalVisibility(true, trip)
                                 }
                             >
                                 VIEW ROUTE >
                             </div>
                         </div>
-                        <div class="trip-card-end-destination">
+                        <div className="trip-card-end-destination">
                             <div className="endtime">
                                 {" "}
                                 {moment(end_trip).format("H:mm")}
@@ -121,7 +117,6 @@ class Trip extends React.Component {
                         </div>
                     </div>
                 </div>
-                {/* </Link> */}
             </>
         );
     }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./BookTrip.css";
-import { DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import { Element, animateScroll as scroll, scroller } from 'react-scroll'
 
 class BookTrip extends React.Component {
     state = {
@@ -11,12 +11,15 @@ class BookTrip extends React.Component {
         driver: "Nuno",
         destination: "Porto",
     };
+
     componentWillUnmount() {
         this.props.cleanAvailableCars();
     }
+    
     handleInputChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     };
+
     handleSubmitBookingHelper = e => {
         e.preventDefault();
         // const date = "2020-03-05";
@@ -51,7 +54,7 @@ class BookTrip extends React.Component {
                         <label htmlFor="name">Name: </label>
                         <input onChange={this.handleInputChange} id="name" type="text" name="driver" />
                         <label htmlFor="where">Destination: </label>
-                        <input onChange={this.handleInputChange} id="destination" type="text" name="destination" />
+                        <input onChange={this.handleInputChange} id="where" type="text" name="destination" />
                         <label htmlFor="date">Date: </label>
                         <input onChange={this.handleInputChange} id="date" type="date" name="date" />
                         <label htmlFor="startTime">Start time: </label>

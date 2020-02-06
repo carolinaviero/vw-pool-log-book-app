@@ -15,6 +15,18 @@ class App extends React.Component {
         this.state = {
             trips: [
                 {
+                    "id": 0,
+                    "driver": "Ed Watson",
+                    "start_trip": "2020-02-05T12:00:00.000Z",
+                    "end_trip": "2020-02-05T18:00:00.000Z",
+                    "destination": "Ribamar",
+                    "car_start_mileage": 40672,
+                    "car_end_mileage": 40677,
+                    "car_id": 1,
+                    "plate": "PG-08-70",
+                    "img_url": "https://res.cloudinary.com/drm2ot7ge/image/upload/v1580913034/Volkswagen/Captura_de_ecr%C3%A3_2020-02-05_%C3%A0s_10.23.25_AM_jvl8ub.png"
+                },
+                {
                     "id": 1,
                     "driver": "Ed Watson",
                     "start_trip": "2020-02-02T12:00:00.000Z",
@@ -22,7 +34,7 @@ class App extends React.Component {
                     "destination": "Alverca do Ribatejo",
                     "car_start_mileage": 40672,
                     "car_end_mileage": 40677,
-                    "car_id": 1,
+                    "car_id": 2,
                     "plate": "PG-08-70",
                     "img_url": "https://res.cloudinary.com/drm2ot7ge/image/upload/v1580913034/Volkswagen/Captura_de_ecr%C3%A3_2020-02-05_%C3%A0s_10.23.25_AM_jvl8ub.png"
                 },
@@ -34,7 +46,7 @@ class App extends React.Component {
                     "destination": "Alameda",
                     "car_start_mileage": 50672,
                     "car_end_mileage": 50677,
-                    "car_id": 1,
+                    "car_id": 2,
                     "plate": "PG-09-77",
                     "img_url": "https://res.cloudinary.com/drm2ot7ge/image/upload/v1580913034/Volkswagen/Captura_de_ecr%C3%A3_2020-02-05_%C3%A0s_10.24.23_AM_nxoeww.png"
                 },
@@ -46,7 +58,7 @@ class App extends React.Component {
                     "destination": "Vila Nova de Mil Fontes",
                     "car_start_mileage": 50677,
                     "car_end_mileage": 50682,
-                    "car_id": 1,
+                    "car_id": 2,
                     "plate": "PG-09-77",
                     "img_url": "https://res.cloudinary.com/drm2ot7ge/image/upload/v1580913034/Volkswagen/Captura_de_ecr%C3%A3_2020-02-05_%C3%A0s_10.24.23_AM_nxoeww.png"
                 },
@@ -64,7 +76,8 @@ class App extends React.Component {
                 }
             ],
             availableCars: [],
-            filterBy: "",
+            filteredTripsByDriver: [],
+            filterByDriver: "all",
             sortByDate: "desc"
         };
     }
@@ -74,6 +87,7 @@ class App extends React.Component {
         // sort((a, b) => moment(b.startDate) - moment(a.startDate))
     }
 
+    // Sorting and filtering
     handleSortByDate = () => {
         this.setState(prevState => {
             return this.state.sortByDate === "desc"
@@ -92,6 +106,11 @@ class App extends React.Component {
         });
     };
 
+    handleFilterByDriver = (driver) => {
+        this.setState({ filterByDriver: driver });
+    };
+
+    // Boonking trips
     handleDateSubmit = (date, startTime, endTime) => {
         // turn strings to moment objects
         const selectedDay = moment(date);
@@ -160,7 +179,7 @@ class App extends React.Component {
     };
 
     render() {
-        const { trips } = this.state;
+        const { trips, filterByDriver } = this.state;
 
         return (
             <div className="App">
@@ -172,7 +191,9 @@ class App extends React.Component {
                             render={() => (
                                 <Home
                                     trips={trips}
+                                    tripsFilteredByDriver={filterByDriver !== "all" ? trips.filter(trip => trip.driver === filterByDriver) : []}
                                     onSortByDate={this.handleSortByDate}
+                                    onFilterByDriver={this.handleFilterByDriver}
                                 />
                             )}
                         />
@@ -200,7 +221,7 @@ class App extends React.Component {
                             exact
                             path="/details/:tripId"
                             render={(routeParams) => (
-                                <TripDetails trip={trips.find(trip => trip.id == routeParams.match.params.tripId)}/>
+                                <TripDetails trip={trips.find(trip => trip.id === +routeParams.match.params.tripId)}/>
                             )}
                         />
                     </Switch>

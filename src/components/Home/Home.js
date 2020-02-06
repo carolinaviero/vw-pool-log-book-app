@@ -4,16 +4,16 @@ import List from "./List";
 
 class Home extends React.Component {
     
-    handleFilterByClick = () => {
-        console.log("TODO");
+    handleFilterByDriver = (e) => {
+        this.props.onFilterByDriver(e.target.value)
     };
 
     handleSortByDate = () => {
         this.props.onSortByDate();
-    }
+    };
     
     render() {
-        const { trips } = this.props;
+        const { trips, tripsFilteredByDriver } = this.props;
 
         return (
             <>
@@ -23,15 +23,20 @@ class Home extends React.Component {
                     <Link to="/booking">Booking</Link>
                 </div>
 
-                <div onClick={this.handleFilterByClick}>
-                    <p>Filter by driver</p>
-                </div>
+                <label htmlFor="driverSelect">Filter by driver: </label>
+                <select id="driverSelect" onChange={this.handleFilterByDriver}>
+                    <option defaultValue>All</option>
+                    {trips
+                        // get all unique drivers in trips and render their names in the select
+                        .reduce((acc, curr) => [...acc, acc.includes(curr.driver) ? null : curr.driver], [])
+                        .map(driver => driver && <option key={driver} value={driver}>{driver}</option>)}
+                </select>
                 
                 <div onClick={this.handleSortByDate}>
                     <p>Sort by date</p>
                 </div>
 
-                <List trips={trips} />
+                <List trips={tripsFilteredByDriver.length ? tripsFilteredByDriver : trips} />
             </>
         );
     }

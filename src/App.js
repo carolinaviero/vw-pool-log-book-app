@@ -5,75 +5,13 @@ import moment from "moment";
 import Home from "./components/Home/Home";
 import BookTrip from "./components/BookTrip/BookTrip";
 import TripDetails from "./components/Home/TripDetails";
-// import car1 from "./media/car-1.png";
-// import car2 from "./media/car-2.png";
+import { tripsHelper } from "./helpers/tripsHelper";
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            trips: [
-                {
-                    "id": 0,
-                    "driver": "Ed Watson",
-                    "start_trip": "2020-02-05T12:00:00.000Z",
-                    "end_trip": "2020-02-05T18:00:00.000Z",
-                    "destination": "Ribamar",
-                    "car_start_mileage": 40672,
-                    "car_end_mileage": 40677,
-                    "car_id": 1,
-                    "plate": "PG-08-70",
-                    "img_url": "https://res.cloudinary.com/drm2ot7ge/image/upload/v1580913034/Volkswagen/Captura_de_ecr%C3%A3_2020-02-05_%C3%A0s_10.23.25_AM_jvl8ub.png"
-                },
-                {
-                    "id": 1,
-                    "driver": "Ed Watson",
-                    "start_trip": "2020-02-02T12:00:00.000Z",
-                    "end_trip": "2020-02-02T14:00:00.000Z",
-                    "destination": "Alverca do Ribatejo",
-                    "car_start_mileage": 40672,
-                    "car_end_mileage": 40677,
-                    "car_id": 2,
-                    "plate": "PG-08-70",
-                    "img_url": "https://res.cloudinary.com/drm2ot7ge/image/upload/v1580913034/Volkswagen/Captura_de_ecr%C3%A3_2020-02-05_%C3%A0s_10.23.25_AM_jvl8ub.png"
-                },
-                {
-                    "id": 2,
-                    "driver": "Nuno Lima",
-                    "start_trip": "2020-02-03T14:00:00.000Z",
-                    "end_trip": "2020-02-03T16:00:00.000Z",
-                    "destination": "Alameda",
-                    "car_start_mileage": 50672,
-                    "car_end_mileage": 50677,
-                    "car_id": 2,
-                    "plate": "PG-09-77",
-                    "img_url": "https://res.cloudinary.com/drm2ot7ge/image/upload/v1580913034/Volkswagen/Captura_de_ecr%C3%A3_2020-02-05_%C3%A0s_10.24.23_AM_nxoeww.png"
-                },
-                {
-                    "id": 3,
-                    "driver": "Carolina Viero",
-                    "start_trip": "2020-02-03T18:00:00.000Z",
-                    "end_trip": "2020-02-03T20:00:00.000Z",
-                    "destination": "Vila Nova de Mil Fontes",
-                    "car_start_mileage": 50677,
-                    "car_end_mileage": 50682,
-                    "car_id": 2,
-                    "plate": "PG-09-77",
-                    "img_url": "https://res.cloudinary.com/drm2ot7ge/image/upload/v1580913034/Volkswagen/Captura_de_ecr%C3%A3_2020-02-05_%C3%A0s_10.24.23_AM_nxoeww.png"
-                },
-                {
-                    "id": 4,
-                    "driver": "Angélina Riet",
-                    "start_trip": "2020-02-04T12:00:00.000Z",
-                    "end_trip": "2020-02-04T14:00:00.000Z",
-                    "destination": "Beja",
-                    "car_start_mileage": 40677,
-                    "car_end_mileage": 40682,
-                    "car_id": 1,
-                    "plate": "PG-08-70",
-                    "img_url": "https://res.cloudinary.com/drm2ot7ge/image/upload/v1580913034/Volkswagen/Captura_de_ecr%C3%A3_2020-02-05_%C3%A0s_10.23.25_AM_jvl8ub.png"
-                }
-            ],
+            trips: [],
             availableCars: [],
             filteredTripsByDriver: [],
             filterByDriver: "all",
@@ -81,7 +19,9 @@ class App extends React.Component {
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        const { trips } = await tripsHelper();
+        this.setState({ trips })
         // sort trips arr by date
         // sort((a, b) => moment(b.startDate) - moment(a.startDate))
     }
@@ -157,7 +97,7 @@ class App extends React.Component {
             }
         ), () => console.log(this.state.availableCars));
         
-        // this.props.history.push("/confirmation");
+        // this.props.history.push("/");
     };
 
     handleSubmitBooking = () => {

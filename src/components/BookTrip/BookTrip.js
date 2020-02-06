@@ -43,7 +43,7 @@ class BookTrip extends React.Component {
                 </div>
                 <div>
                     Available cars: (available cars for the chosen date and time
-                    will be displayed here)
+                        bookingwill be displayed here)
                 </div>
                 <div>
                     <div>Please confirm your details:</div>

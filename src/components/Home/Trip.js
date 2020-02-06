@@ -6,12 +6,13 @@ import MapModal from "./MapModal";
 
 class Trip extends React.Component {
   render() {
-    const { trip, isModalVisible, handleModalVisibility } = this.props;
+    const { trip, handleModalVisibility } = this.props;
     const { id, img_url, driver, start_trip, end_trip, destination } = trip;
 
     return (
       <>
-        <Link to={`/details/${id}`}>
+        {/* <Link to={`/details/${id}`}> */}
+        <div onClick={() => handleModalVisibility(true, trip)}>
           <div className="trip-card-parent">
             <div className="trip-card-car-image">
               {" "}
@@ -54,7 +55,8 @@ class Trip extends React.Component {
               <div class="button">END TRIP</div>
             </div>
           </div>
-        </Link>
+        </div>
+        {/* </Link> */}
       </>
     );
   }

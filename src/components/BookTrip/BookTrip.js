@@ -20,13 +20,14 @@ class BookTrip extends React.Component {
         this.setState({ [e.target.name]: e.target.value });
     };
 
-    handleSubmitBookingHelper = e => {
+    renderAvailableCars = e => {
         e.preventDefault();
-        // const date = "2020-03-05";
-        // const startTime = "15:00";
-        // const endTime = "19:00";
         const { date, startTime, endTime } = this.state;
         this.props.handleDateSubmit(date, startTime, endTime);
+    };
+
+    handleBookTrip = () => {
+
     };
 
     scrollToTop = () => scroll.scrollToTop();
@@ -40,8 +41,9 @@ class BookTrip extends React.Component {
     }
     
     render() {
+        const { date, startTime, endTime, driver, destination } = this.state;
         const { availableCars } = this.props;
-        console.log(this.state);
+
         return (
             <>
                 <h1>Book your Trip</h1>
@@ -50,17 +52,17 @@ class BookTrip extends React.Component {
                 </div>
                 <h2>Please confirm your details:</h2>
                 <div>
-                    <form onSubmit={this.handleSubmitBookingHelper}>
+                    <form onSubmit={this.renderAvailableCars}>
                         <label htmlFor="name">Name: </label>
-                        <input onChange={this.handleInputChange} id="name" type="text" name="driver" />
+                        <input onChange={this.handleInputChange} id="name" type="text" name="driver" value={driver}/>
                         <label htmlFor="where">Destination: </label>
-                        <input onChange={this.handleInputChange} id="where" type="text" name="destination" />
+                        <input onChange={this.handleInputChange} id="where" type="text" name="destination" value={destination}/>
                         <label htmlFor="date">Date: </label>
-                        <input onChange={this.handleInputChange} id="date" type="date" name="date" />
+                        <input onChange={this.handleInputChange} id="date" type="date" name="date" value={date}/>
                         <label htmlFor="startTime">Start time: </label>
-                        <input onChange={this.handleInputChange} id="startTime" type="time" name="startTime" />
+                        <input onChange={this.handleInputChange} id="startTime" type="time" name="startTime" value={startTime}/>
                         <label htmlFor="endTime">Estimated end time: </label>
-                        <input onChange={this.handleInputChange} id="endTime" type="time" name="endTime" />
+                        <input onChange={this.handleInputChange} id="endTime" type="time" name="endTime" value={endTime} />
                         <div className="submit-button-div">
                             <input type="submit" value="SUBMIT" className="submit-button" onClick={() => this.scrollTo()}/>
                         </div>
@@ -79,7 +81,7 @@ class BookTrip extends React.Component {
                     <div className="parent-car-container">
                         {
                             availableCars.map(car => 
-                                <div className="car-container">
+                                <div key={car.id} className="car-container">
                                     <div className="book-card-car-image">
                                     {" "}
                                     <img

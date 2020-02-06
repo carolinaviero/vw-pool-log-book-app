@@ -143,16 +143,21 @@ class App extends React.Component {
     };
 
     // Start and end trips
-    editTripSubmitHandler = (trip, mileage, type) => {
+    editTripHandler = (trip, mileage, type) => {
         // trip with mileage
         const updatedTrip =
             type === "start"
                 ? {
                       ...trip,
+                      start_trip: moment().format("YYYY-MM-DD HH:mm:ss"),
                       car_start_mileage: mileage,
                       car_end_mileage: mileage
                   }
-                : { ...trip, car_end_mileage: mileage };
+                : {
+                      ...trip,
+                      end_trip: moment().format("YYYY-MM-DD HH:mm:ss"),
+                      car_end_mileage: mileage
+                  };
         // update the DB
         startTripHelperFn(updatedTrip);
         // update the state with a new trips
@@ -206,9 +211,7 @@ class App extends React.Component {
                                     handleModalVisibility={
                                         this.handleEditModalVisibility
                                     }
-                                    onEditTripSubmit={
-                                        this.editTripSubmitHandler
-                                    }
+                                    onEditTripSubmit={this.editTripHandler}
                                 />
                             )}
 

@@ -112,3 +112,14 @@ a {
 .hvr-underline-from-left:active:before {
   right: 0;
 }
+
+/* footer */
+
+footer {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 60px;
+  color: #4a4a4a;
+  background-color: #f5f5f5;
+}

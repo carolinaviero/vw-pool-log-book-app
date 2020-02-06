@@ -226,6 +226,9 @@ class App extends React.Component {
               />
             </Switch>
           </header>
+          <footer>
+            CREATED AT THE WILD CODE SCHOOL LISBON HACKATHON FOR VWDS, © 2020.
+          </footer>
         </div>
       </>
     );

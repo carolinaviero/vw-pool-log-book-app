@@ -1,0 +1,9 @@
+.listContainer {
+  background-color: #f6f6fb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 5%;
+}
+

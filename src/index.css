@@ -12,6 +12,10 @@
   font-style: normal;
 }
 
+* {
+  font-family: "VWAG The Sans";
+}
+
 body {
   margin-left: 5%;
   margin-right: 5%;
@@ -42,6 +46,19 @@ p {
   font-weight: 400px;
   color: #7a7a7a;
   font-size: 16px;
+}
+
+label {
+  font-family: "VWAG The Sans", sans-serif;
+  line-height: 24px;
+  font-weight: 1000px;
+  color: black;
+  font-size: 16px;
+}
+
+a {
+  text-decoration: inherit;
+  color: inherit;
 }
 
 .button {

@@ -8,7 +8,7 @@ class List extends React.Component {
     const { trips } = this.props;
     return (
       <>
-        <h2>List Component</h2>
+        <h2>Booked Trips</h2>
         <div className="listContainer">
           {trips.map(trip => (
             <Trip key={trip.id} trip={trip} />

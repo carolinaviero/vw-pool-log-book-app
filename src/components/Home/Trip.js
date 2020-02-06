@@ -7,12 +7,20 @@ import MapModal from "./MapModal";
 class Trip extends React.Component {
   render() {
     const { trip, handleModalVisibility } = this.props;
-    const { id, img_url, driver, start_trip, end_trip, destination } = trip;
+    const {
+      id,
+      img_url,
+      driver,
+      start_trip,
+      end_trip,
+      destination,
+      plate
+    } = trip;
 
     return (
       <>
         {/* <Link to={`/details/${id}`}> */}
-        <div onClick={() => handleModalVisibility(true, trip)}>
+        <div>
           <div className="trip-card-parent">
             <div className="trip-card-car-image">
               {" "}
@@ -25,7 +33,7 @@ class Trip extends React.Component {
             <div className="trip-card-driver-and-license">
               <div class="driver-name">{driver}</div>
 
-              <div class="license-plate"> PG-08-70</div>
+              <div class="license-plate"> {plate}</div>
             </div>
             <div className="trip-card-start-destination">
               <div className="starttime">
@@ -34,17 +42,24 @@ class Trip extends React.Component {
 
               <div className="startdestination"> RATO LISBON</div>
               <div className="startday">
-                {moment(start_trip).format("D of MMM, YYYY")}
+                {moment(start_trip).format("D MMM YYYY")}
               </div>
             </div>
             <div class="trip-card-arrow">
               <span class="trip-arrow"> &#x27F7;</span>
+              <br />
+              <div
+                class="viewmaplink"
+                onClick={() => handleModalVisibility(true, trip)}
+              >
+                VIEW ROUTE >
+              </div>
             </div>
             <div class="trip-card-end-destination">
               <div className="endtime"> {moment(end_trip).format("H:mm")}</div>
               <div className="enddestination">{destination}</div>
               <div className="endday">
-                {moment(end_trip).format("D of MMM, YYYY")}
+                {moment(end_trip).format("D MMM YYYY")}
               </div>
             </div>
             <div class="trip-card-start-trip">

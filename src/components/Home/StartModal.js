@@ -55,7 +55,7 @@ class StartModal extends React.Component {
                         <label htmlFor="startMileage">
                             {type === "start" ? `Insert initial car mileage`: `Insert final car mileage` }
                         </label>
-                        <input onChange={this.handleInputChange} id="startMileage" type="number" value={mileage} min={initialMil + 1} />
+                        <input onChange={this.handleInputChange} id="startMileage" type="number" value={mileage} min={+initialMil + 1} />
                         <input type="submit" value="DONE"></input>
                     </form>
 

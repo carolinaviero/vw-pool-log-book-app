@@ -1,13 +1,13 @@
 import React from "react";
 import "./App.css";
 import { Switch, Route, withRouter } from "react-router-dom";
+import { animateScroll as scroll } from "react-scroll";
 import moment from "moment";
 import Home from "./components/Home/Home";
 import BookTrip from "./components/BookTrip/BookTrip";
-import TripDetails from "./components/Home/TripDetails";
 import MapModal from "./components/Home/MapModal";
 import StartModal from "./components/Home/StartModal";
-import { tripsHelperFn, startTripHelperFn } from "./helpers/tripsHelper";
+import { tripsHelperFn, startTripHelperFn, bookingHelperFn } from "./helpers/tripsHelper";
 
 class App extends React.Component {
     constructor(props) {
@@ -28,6 +28,10 @@ class App extends React.Component {
     async componentDidMount() {
         const { trips, cars } = await tripsHelperFn();
         this.setState({ trips, cars });
+    }
+
+    componentDidUpdate() {
+        scroll.scrollToTop();
     }
 
     // Handle modals visibility
@@ -91,7 +95,7 @@ class App extends React.Component {
                     : [...(acc[curr.car_id] ? acc[curr.car_id] : [])]
             };
         }, {});
-        console.log("Booked trips by car: ", bookedDatesByCar);
+        // console.log("Booked trips by car: ", bookedDatesByCar);
 
         // check if selectd date and time overlaps any alerady booked trips
         // TODO alienate to helper file
@@ -125,7 +129,7 @@ class App extends React.Component {
                 }
             }
         }
-        console.log("Unavailable car ids: ", unavailableCarIds);
+        // console.log("Unavailable car ids: ", unavailableCarIds);
 
         this.setState(
             prevState => ({
@@ -133,9 +137,18 @@ class App extends React.Component {
                 availableCars: prevState.cars.filter(
                     car => !unavailableCarIds.includes(car.id)
                 )
-            }),
-            () => console.log("Available cars: ", this.state.availableCars)
+            })
         );
+    };
+
+    handleOnBooking = (trip) => {
+        bookingHelperFn(trip);
+        this.setState(prevState => (
+            {
+                ...prevState,
+                trips: [trip, ...prevState.trips],
+            }
+        ));
     };
 
     cleanAvailableCars = () => {
@@ -264,6 +277,7 @@ class App extends React.Component {
                                         cleanAvailableCars={
                                             this.cleanAvailableCars
                                         }
+                                        onBooking={this.handleOnBooking}
                                     />
                                 )}
                             />

@@ -32,7 +32,7 @@ class Home extends React.Component {
                 <h2>Current Trips</h2>
 
                 <div className="filters">
-                    <label class="driver-select" htmlFor="driverSelect">
+                    <label className="driver-select" htmlFor="driverSelect">
                         Filter by driver:{" "}
                     </label>
 

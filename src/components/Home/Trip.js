@@ -1,18 +1,13 @@
 import React from "react";
 import "./Trip.css";
 import moment from "moment";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import MapModal from "./MapModal";
 
 class Trip extends React.Component {
   render() {
-    const {
-      id,
-      img_url,
-      driver,
-      start_trip,
-      end_trip,
-      destination
-    } = this.props.trip;
+    const { trip, isModalVisible, handleModalVisibility } = this.props;
+    const { id, img_url, driver, start_trip, end_trip, destination } = trip;
 
     return (
       <>
@@ -20,7 +15,11 @@ class Trip extends React.Component {
           <div className="trip-card-parent">
             <div className="trip-card-car-image">
               {" "}
-              <img className="tripCarImage" src={img_url} alt="" />
+              <img
+                className="tripCarImage"
+                src={img_url}
+                alt="car-volkswagon"
+              />
             </div>
             <div className="trip-card-driver-and-license">
               <div class="driver-name">{driver}</div>

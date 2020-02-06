@@ -8,23 +8,23 @@ import TripDetails from "./components/Home/TripDetails";
 import { tripsHelper } from "./helpers/tripsHelper";
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            trips: [],
-            availableCars: [],
-            filteredTripsByDriver: [],
-            filterByDriver: "all",
-            sortByDate: "desc"
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      trips: [],
+      availableCars: [],
+      filteredTripsByDriver: [],
+      filterByDriver: "all",
+      sortByDate: "desc"
+    };
+  }
 
-    async componentDidMount() {
-        const { trips } = await tripsHelper();
-        this.setState({ trips })
-        // sort trips arr by date
-        // sort((a, b) => moment(b.startDate) - moment(a.startDate))
-    }
+  async componentDidMount() {
+    const { trips } = await tripsHelper();
+    this.setState({ trips });
+    // sort trips arr by date
+    // sort((a, b) => moment(b.startDate) - moment(a.startDate))
+  }
 
   // Sorting and filtering
   handleSortByDate = () => {
@@ -43,6 +43,23 @@ class App extends React.Component {
             sortByDate: "desc"
           };
     });
+  };
+
+  handleSubmitBooking = () => {
+    console.log("booked");
+    this.props.history.push("/");
+    // this.setState((prevState) => {
+    //     return {
+    //         ...prevState,
+    //         allTrips: [
+    //             {
+    //                 name:
+    //                 startDate:
+    //                 endDate:
+    //             }
+    //         ]
+    //     }
+    // })
   };
 
   handleFilterByDriver = driver => {
@@ -101,43 +118,26 @@ class App extends React.Component {
               ? false
               : true;
         }
-        
-        this.setState((prevState) => (
-            { 
-                ...prevState,
-                availableCars: Object.keys(carAvailability)  
-            }
-        ), () => console.log(this.state.availableCars));
-        
+
+        this.setState(
+          prevState => ({
+            ...prevState,
+            availableCars: Object.keys(carAvailability)
+          }),
+          () => console.log(this.state.availableCars)
+        );
+
         // this.props.history.push("/");
-    };
+      }
 
-    this.setState(
-      prevState => ({
-        ...prevState,
-        availableCars: Object.keys(carAvailability)
-      }),
-      () => console.log(this.state.availableCars)
-    );
-
-    // this.props.history.push("/confirmation");
-  };
-
-  handleSubmitBooking = () => {
-    console.log("booked");
-    this.props.history.push("/");
-    // this.setState((prevState) => {
-    //     return {
-    //         ...prevState,
-    //         allTrips: [
-    //             {
-    //                 name:
-    //                 startDate:
-    //                 endDate:
-    //             }
-    //         ]
-    //     }
-    // })
+      this.setState(
+        prevState => ({
+          ...prevState,
+          availableCars: Object.keys(carAvailability)
+        }),
+        () => console.log(this.state.availableCars)
+      );
+    }
   };
 
   render() {

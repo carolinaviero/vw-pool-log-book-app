@@ -17,9 +17,9 @@ class Home extends React.Component {
 
         return (
             <>
-                <div>Home Component</div>
+                <h1>Home Component</h1>
                 
-                <div>
+                <div className="button">
                     <Link to="/booking">Booking</Link>
                 </div>
 

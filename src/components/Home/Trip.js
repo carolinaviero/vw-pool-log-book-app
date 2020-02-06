@@ -7,7 +7,15 @@ import MapModal from "./MapModal";
 class Trip extends React.Component {
   render() {
     const { trip, handleModalVisibility } = this.props;
-    const { id, img_url, driver, start_trip, end_trip, destination } = trip;
+    const {
+      id,
+      img_url,
+      driver,
+      start_trip,
+      end_trip,
+      destination,
+      plate
+    } = trip;
 
     return (
       <>
@@ -25,7 +33,7 @@ class Trip extends React.Component {
             <div className="trip-card-driver-and-license">
               <div class="driver-name">{driver}</div>
 
-              <div class="license-plate"> PG-08-70</div>
+              <div class="license-plate"> {plate}</div>
             </div>
             <div className="trip-card-start-destination">
               <div className="starttime">

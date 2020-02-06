@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 class Trip extends React.Component {
     render() {
         const { id, img_url, driver, start_trip, end_trip, destination } = this.props.trip;
+        
         return (
             <div className="tripContainer">
                 {/* <div class="tripCarImage" style={{ backgroundImage: `url(${trip.image})` }}></div> */}

@@ -7,18 +7,3 @@
   padding: 5%;
 }
 
-#page-numbers {
-  list-style: none;
-  display: flex;
-}
-
-#page-numbers > li {
-  margin-right: 0.3em;
-  color: lightgray;
-  user-select: none;
-  cursor: pointer;
-}
-
-#page-numbers .active {
-  color: #601539;
-}

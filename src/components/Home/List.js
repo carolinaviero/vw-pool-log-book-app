@@ -12,10 +12,9 @@ class List extends React.Component {
       currentPage: 1,
       tripsPerPage: 12
     };
-    this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(event) {
+  handleClick = (event) => {
     this.setState({
       currentPage: Number(event.target.id)
     });
@@ -70,7 +69,8 @@ class List extends React.Component {
             <Trip
               key={trip.id}
               trip={trip}
-              handleModalVisibility={this.props.handleModalVisibility}
+              handleMapModalVisibility={this.props.handleMapModalVisibility}
+              handleEditModalVisibility={this.props.handleEditModalVisibility}
             />
           ))}
         </div>

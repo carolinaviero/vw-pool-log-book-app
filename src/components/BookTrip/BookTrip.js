@@ -31,12 +31,12 @@ class BookTrip extends React.Component {
 
     handleBooking = (car_id, img_url, plate) => {
         const { date, startTime, endTime, driver, destination } = this.state;
-        const start_trip = moment(`${date} ${startTime}`).format("YYYY-MM-DD HH:mm:ss.000Z");
-        const end_trip = moment(`${date} ${endTime}`).format("YYYY-MM-DD HH:mm:ss.000Z");
+        const start_trip = moment(`${date} ${startTime}`).format("YYYY-MM-DD HH:mm:ss");
+        const end_trip = moment(`${date} ${endTime}`).format("YYYY-MM-DD HH:mm:ss");
         const id = Math.random() * 100;
         const newBooking = { driver,  start_trip, end_trip, destination, car_start_mileage: 0, car_end_mileage: 0, car_id, plate, img_url, id };
         this.props.onBooking(newBooking);
-        this.props.history.push("/");
+        this.props.history.push("/bookingsuccess");
     };
 
     scrollToTop = () => scroll.scrollToTop();

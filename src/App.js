@@ -7,11 +7,8 @@ import Home from "./components/Home/Home";
 import BookTrip from "./components/BookTrip/BookTrip";
 import MapModal from "./components/Home/MapModal";
 import StartModal from "./components/Home/StartModal";
-import {
-    tripsHelperFn,
-    startTripHelperFn,
-    bookingHelperFn
-} from "./helpers/tripsHelper";
+import Success from "./components/SuccessSignposting/Success";
+import { tripsHelperFn, startTripHelperFn, bookingHelperFn } from "./helpers/tripsHelper";
 
 class App extends React.Component {
     constructor(props) {
@@ -19,6 +16,7 @@ class App extends React.Component {
         this.state = {
             trips: [],
             cars: [],
+            trip: {},
             availableCars: [],
             filterByDriver: "all",
             sortByDate: "desc",
@@ -79,14 +77,13 @@ class App extends React.Component {
 
     // Boonking trips
     handleDateSubmit = (date, startTime, endTime) => {
-        // turn strings to moment objects
-        const selectedDay = moment(date);
-        const startTrip = moment(`${date} ${startTime}`);
-        const endTrip = moment(`${date} ${endTime}`);
+        // format date strings
+        const startTrip = moment(`${date} ${startTime}`).format("YYYY-MM-DD HH:mm:ss");
+        const endTrip = moment(`${date} ${endTime}`).format("YYYY-MM-DD HH:mm:ss");
+        const now = moment().format("YYYY-MM-DD HH:mm:ss");
 
-        // get all booked hours by car that are in the future
-        const now = moment().format("YYYY-MM-DD HH:mm:ss.000Z");
         // TODO: alienate to helper file
+        // get all booked hours by car that are in the future
         const bookedDatesByCar = this.state.trips.reduce((acc, curr) => {
             const newTrip =
                 curr.end_trip > now
@@ -99,46 +96,53 @@ class App extends React.Component {
                     : [...(acc[curr.car_id] ? acc[curr.car_id] : [])]
             };
         }, {});
-        console.log("Booked trips by car: ", bookedDatesByCar);
 
-        // check if selectd date and time overlaps any alerady booked trips
         // TODO alienate to helper file
         let unavailableCarIds = [];
-        for (const key in bookedDatesByCar) {
-            for (let i = 0; i < bookedDatesByCar[key].length; i++) {
-                const currentCarStartTrip = moment(
-                    bookedDatesByCar[key][i].start_trip
-                );
-                const currentCarEndTrip = moment(
-                    bookedDatesByCar[key][i].end_trip
-                );
-                // check if there are overlapping hours
-                if (
-                    (startTrip >= currentCarStartTrip &&
-                        startTrip <= currentCarEndTrip) ||
-                    (endTrip >= currentCarStartTrip &&
-                        endTrip <= currentCarEndTrip) ||
-                    (startTrip <= currentCarStartTrip &&
-                        endTrip >= currentCarEndTrip) 
-                ) {
-                    // push car_id to unavailableCarIds arr if it's not already there
-                    if (!unavailableCarIds.includes(Number(key)))
-                        unavailableCarIds.push(Number(key));
+        // check if bookedDatesByCar is not an empty obj (which will happen with an empty DB) and is not composed of empty arrays (no future trips booked)
+        if (Object.keys(bookedDatesByCar).length > 0 && Object.values(bookedDatesByCar).some(date => date.length > 0)) {
+            for (const key in bookedDatesByCar) {
+                for (let i = 0; i < bookedDatesByCar[key].length; i++) {
+                    const currentCarStartTrip = moment(
+                        bookedDatesByCar[key][i].start_trip
+                    ).format("YYYY-MM-DD HH:mm:ss");
+                    const currentCarEndTrip = moment(
+                        bookedDatesByCar[key][i].end_trip
+                    ).format("YYYY-MM-DD HH:mm:ss");
+                    // check if there are overlapping hours
+                    if (
+                        (startTrip > currentCarStartTrip &&
+                            startTrip < currentCarEndTrip) ||
+                        (endTrip > currentCarStartTrip &&
+                            endTrip < currentCarEndTrip) ||
+                        (startTrip < currentCarStartTrip &&
+                            endTrip > currentCarEndTrip) ||
+                        (startTrip === currentCarStartTrip &&
+                            endTrip === currentCarEndTrip)
+                    ) {
+                        // push car_id to unavailableCarIds arr if it's not already there
+                        if (!unavailableCarIds.includes(Number(key)))
+                            unavailableCarIds.push(Number(key));
+                    }
+    
+                    this.setState(prevState => ({
+                        ...prevState,
+                        availableCars: prevState.cars.filter(car => !unavailableCarIds.includes(car.id))
+                    }));
                 }
-                console.log("Unavailable car ids: ", unavailableCarIds);
-
-                this.setState(prevState => ({
-                    ...prevState,
-                    availableCars: prevState.cars.filter(car => !unavailableCarIds.includes(car.id))
-                }));
             }
+        } else {
+            this.setState(prevState => ({ ...prevState, availableCars: prevState.cars }));
         }
     };
 
     handleOnBooking = trip => {
+        // save trip in DB
         bookingHelperFn(trip);
+        // optimistically update the state
         this.setState(prevState => ({
             ...prevState,
+            trip,
             trips: [trip, ...prevState.trips]
         }));
     };
@@ -154,13 +158,13 @@ class App extends React.Component {
             type === "start"
                 ? {
                       ...trip,
-                      start_trip: moment().format("YYYY-MM-DD HH:mm:ss.000Z"),
+                      start_trip: moment().format("YYYY-MM-DD HH:mm:ss"),
                       car_start_mileage: mileage,
                       car_end_mileage: mileage
                   }
                 : {
                       ...trip,
-                      end_trip: moment().format("YYYY-MM-DD HH:mm:ss.000Z"),
+                      end_trip: moment().format("YYYY-MM-DD HH:mm:ss"),
                       car_end_mileage: mileage
                   };
         // update the DB
@@ -186,6 +190,7 @@ class App extends React.Component {
         const {
             trips,
             availableCars,
+            trip,
             filterByDriver,
             isMapModalVisible,
             isStartModalVisible,
@@ -235,16 +240,10 @@ class App extends React.Component {
                                                 : []
                                         }
                                         onSortByDate={this.handleSortByDate}
-                                        onFilterByDriver={
-                                            this.handleFilterByDriver
-                                        }
+                                        onFilterByDriver={this.handleFilterByDriver}
                                         isMapModalVisible={isMapModalVisible}
-                                        handleMapModalVisibility={
-                                            this.handleMapModalVisibility
-                                        }
-                                        handleEditModalVisibility={
-                                            this.handleEditModalVisibility
-                                        }
+                                        handleMapModalVisibility={this.handleMapModalVisibility}
+                                        handleEditModalVisibility={this.handleEditModalVisibility}
                                     />
                                 )}
                             />
@@ -255,19 +254,36 @@ class App extends React.Component {
                                     <BookTrip
                                         handleDateSubmit={this.handleDateSubmit}
                                         availableCars={availableCars}
-                                        cleanAvailableCars={
-                                            this.cleanAvailableCars
-                                        }
+                                        cleanAvailableCars={this.cleanAvailableCars}
                                         onBooking={this.handleOnBooking}
                                     />
                                 )}
                             />
+
+                            
+                            <Route
+                                exact
+                                path="/bookingsuccess"
+                                render={() => (
+                                <Success
+                                    header={"You've booked a car!"}
+                                    subheader={"We've got you covered."}
+                                    paragraph={`Once you get in the car, find your trip in Current Trips, and just tap START TRIP. Enter the start mileage from the car's dial, then you're ready to drive!`}
+                                    trip={trip}
+                                    buttontext={"OK"}
+                                    buttonlinkdestination={"/"}
+                                />
+                                )}
+                            />
+
                         </Switch>
                     </header>
+
                     <footer>
                         CREATED AT THE WILD CODE SCHOOL LISBON HACKATHON FOR
                         VWDS, © 2020.
                     </footer>
+
                     {isStartModalVisible && (
                         <StartModal
                             type={typeOfModal}

@@ -127,9 +127,8 @@ a {
   line-height: 28px;
   margin-top: 2%;
   margin-bottom: 2%;
-
   opacity: 0.5;
-  cursor: inherit;
+  cursor: not-allowed;
   text-decoration: none !important;
 }
 

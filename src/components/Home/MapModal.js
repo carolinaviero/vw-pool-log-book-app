@@ -27,7 +27,7 @@ class MapModal extends React.Component {
                     isOpen={isModalVisible}
                     //onAfterOpen={afterOpenModal}
                     // onRequestClose={closeModal}
-                    style={customStyles}
+                    // style={customStyles}
                     // contentLabel="Example Modal"
                     className="mapModalBackground"
                     //overlayClassName="modal-overlay"

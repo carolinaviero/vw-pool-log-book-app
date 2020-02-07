@@ -5,7 +5,7 @@ import Modal from "react-modal";
 const customStyles = {
     content: {
         width: "100%",
-        height: "auto",
+        height: "100%",
         border: 0,
         top: 0,
         left: 0,
@@ -25,12 +25,8 @@ class MapModal extends React.Component {
             <>
                 <Modal
                     isOpen={isModalVisible}
-                    //onAfterOpen={afterOpenModal}
-                    // onRequestClose={closeModal}
-                    // style={customStyles}
-                    // contentLabel="Example Modal"
+                    style={customStyles}
                     className="mapModalBackground"
-                    //overlayClassName="modal-overlay"
                 >
                     <div className="mapModalContainer">
                         <h2 className="mapModalTitle">Details of {driver}'s trip</h2>
@@ -42,8 +38,8 @@ class MapModal extends React.Component {
                     <div className="mapModalContainer">
                     <iframe
                         title={"map"}
-                        width="80%"
-                        height="auto"
+                        width="90%"
+                        height="500px"
                         frameBorder="0"
                         style={{ border: 0 }}
                         src={`https://www.google.com/maps/embed/v1/directions?origin=rato&waypoints=${destination}&destination=rato&key=${process.env.REACT_APP_MAPS_KEY}`}

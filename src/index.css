@@ -67,6 +67,7 @@ a {
 }
 
 .button {
+  cursor: pointer;
   background-color: #a41a4c;
   width: 130px;
   margin: 0 auto;

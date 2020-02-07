@@ -153,7 +153,7 @@ class App extends React.Component {
         const updatedTrip =
             type === "start"
                 ? {
-                      ...tri6p,
+                      ...trip,
                       start_trip: moment().format("YYYY-MM-DD HH:mm:ss.000Z"),
                       car_start_mileage: mileage,
                       car_end_mileage: mileage

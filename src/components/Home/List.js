@@ -14,12 +14,21 @@ class List extends React.Component {
     };
   }
 
-  handleClick = (event) => {
+  static getDerivedStateFromProps(props, state) {
+    if (props.trips.length <= state.tripsPerPage) {
+      return {
+        currentPage: 1
+      };
+    }
+    return null;
+  }
+
+  handleClick = event => {
     this.setState({
       currentPage: Number(event.target.id)
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  };
 
   render() {
     // Logic for displaying current todos

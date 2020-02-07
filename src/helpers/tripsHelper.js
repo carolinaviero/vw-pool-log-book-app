@@ -25,3 +25,19 @@ export const startTripHelperFn = async (trip) => {
     }
 };
 
+export const bookingHelperFn = async(trip) => {
+    try {
+        const options = {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify(trip)
+        };
+        const response = await fetch(`http://localhost:3001/trip/create`, options);
+        return response;
+    } catch(e) {
+        console.log(e);
+    }
+}

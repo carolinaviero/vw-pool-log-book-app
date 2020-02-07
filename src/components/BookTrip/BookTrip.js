@@ -11,6 +11,7 @@ class BookTrip extends React.Component {
         endTime: "19:00",
         driver: "Nuno",
         destination: "Porto",
+        showMessage: false,
     };
 
     componentWillUnmount() {
@@ -25,6 +26,7 @@ class BookTrip extends React.Component {
         e.preventDefault();
         const { date, startTime, endTime } = this.state;
         this.props.handleDateSubmit(date, startTime, endTime);
+        this.setState({ showMessage: true })
     };
 
     handleBooking = (car_id, img_url, plate) => {
@@ -46,9 +48,9 @@ class BookTrip extends React.Component {
             smooth: 'easeOutQuad'
         })
     }
-    
+
     render() {
-        const { date, startTime, endTime, driver, destination } = this.state;
+        const { date, startTime, endTime, driver, destination, showMessage } = this.state;
         const { availableCars } = this.props;
 
         return (
@@ -78,12 +80,21 @@ class BookTrip extends React.Component {
 
                 <Element name="scroll-to-element" className="element">
                     {
-                        availableCars.length ?  
+                        availableCars.length > 1 ?  
                         <div className="available-cars-text">
                             <h2>{availableCars.length} available cars for selected dates:</h2> 
                         </div>
                         : 
-                        null
+                        <div className="available-cars-text">
+                            <h2>{ availableCars.length === 1 ? 
+                                `${availableCars.length} available car for selected date:`
+                                :
+                                showMessage ? 'Unfortunately, there are no cars available during this period, please try again.' 
+                                : 
+                                null
+                                }
+                            </h2> 
+                        </div>
                     }
                     <div className="parent-car-container">
                         {

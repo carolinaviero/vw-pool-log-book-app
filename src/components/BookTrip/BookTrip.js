@@ -36,7 +36,7 @@ class BookTrip extends React.Component {
         const id = Math.random() * 100;
         const newBooking = { driver,  start_trip, end_trip, destination, car_start_mileage: 0, car_end_mileage: 0, car_id, plate, img_url, id };
         this.props.onBooking(newBooking);
-        this.props.history.push("/");
+        this.props.history.push("/bookingsuccess");
     };
 
     scrollToTop = () => scroll.scrollToTop();

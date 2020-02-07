@@ -34,13 +34,10 @@ class App extends React.Component {
     }
 
     async componentDidMount() {
+        scroll.scrollToTop();
         const { trips, cars } = await tripsHelperFn();
         const { driverMetrics, carMetrics } = await metricsHelperFn();
         this.setState({ trips, cars });
-    }
-
-    componentDidUpdate() {
-        scroll.scrollToTop();
     }
 
     // Handle modals visibility

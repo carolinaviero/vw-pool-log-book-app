@@ -26,7 +26,12 @@
   align-items: center;
 }
 
+.viewmaplink {
+  cursor: pointer;
+}
+
 .trip-card-parent {
+  cursor: inherit !important;
   margin: 7px;
   display: grid;
   width: 298px;
@@ -103,6 +108,7 @@
   text-align: center;
   vertical-align: middle;
   padding-top: 9px;
+  cursor: pointer;
 }
 
 .viewmaplink {

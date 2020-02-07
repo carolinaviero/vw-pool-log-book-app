@@ -206,7 +206,8 @@ class App extends React.Component {
       isMapModalVisible,
       isStartModalVisible,
       typeOfModal,
-      selectedTrip
+      selectedTrip,
+      sortByDate
     } = this.state;
 
     return (
@@ -246,6 +247,7 @@ class App extends React.Component {
                         ? trips.filter(trip => trip.driver === filterByDriver)
                         : []
                     }
+                    sortByDate={sortByDate}
                     onSortByDate={this.handleSortByDate}
                     onFilterByDriver={this.handleFilterByDriver}
                     isMapModalVisible={isMapModalVisible}

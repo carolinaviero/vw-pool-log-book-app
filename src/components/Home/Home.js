@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import List from "./List";
 import "./Home.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
 
 class Home extends React.Component {
     handleFilterByDriver = e => {
@@ -18,7 +20,8 @@ class Home extends React.Component {
             tripsFilteredByDriver,
             isModalVisible,
             handleMapModalVisibility,
-            handleEditModalVisibility
+            handleEditModalVisibility,
+            sortByDate
         } = this.props;
 
         return (
@@ -31,7 +34,7 @@ class Home extends React.Component {
                 <br />
                 <h2>Current Trips</h2>
 
-                <div className="filters">
+                <div>
                     <label className="driver-select" htmlFor="driverSelect">
                         Filter by driver:{" "}
                     </label>
@@ -62,11 +65,29 @@ class Home extends React.Component {
                                     )
                             )}
                     </select>
-                    <div
-                        id="sort-by-date-filter"
-                        onClick={this.handleSortByDate}
-                    >
-                        Sort by date
+                    <div id="sort-by-date-filter" onClick={this.handleSortByDate}>
+                        Sort by date &nbsp;
+
+                        {
+                            sortByDate === 'desc' ?
+                            <div className="font-awesome-icons-div">
+                                <div className="light-arrow">
+                                    ▲
+                                </div>
+                                <div className="bold-arrow">
+                                    ▼
+                                </div>
+                             </div>
+                            :
+                             <div className="font-awesome-icons-div">
+                             <div className="bold-arrow">
+                                 ▲
+                             </div>
+                             <div className="light-arrow">
+                                 ▼
+                             </div>
+                          </div>
+                        }
                     </div>
                 </div>
                 <List

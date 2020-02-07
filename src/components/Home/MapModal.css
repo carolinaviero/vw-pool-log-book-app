@@ -1,22 +1,28 @@
 .mapModalContainer {
     display: flex;
+    margin: 0 auto;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 50px;
+    background-color:rgba(246, 246, 251, 0.8)
 }
 
 .mapModalButton {
     position: relative;
     justify-content: center;
-    top: 10px;
-    right: 20px;
+    padding-left: 15px;
+    top: 15px;
     color: white;
-    font-size: 30px;
+    font-size: 16px;
     font-weight: bold;
-    width:50px;
-	height:50px;
+    width:40px;
+	height:40px;
     border-radius: 50%;
     background-position: center;
     margin: 0;
     padding: 0;
     background-color: #a41a4c;
+    cursor: pointer;
 }
 
 .mapModalButton:hover {
@@ -25,7 +31,7 @@
 
 .mapModalTitle {
     margin: 0 auto;
-    padding: 20px 0 20px 0;
+    padding: 30px 0 20px 0;
     color: #000000;
 }
 
@@ -38,11 +44,75 @@
     background-color:rgba(246, 246, 251, 0.8);   
 }
 
-.mapModalContainer {
-    padding: 20px 90px 20px 90px;
-    margin: 0 auto;
+
+.submit-button:hover {
+    background-color: #601539 !important;
+    
 }
 
-.Overlay{
- background-color: red;
+.submit-button {
+    background-color: #a41a4c;
+    color: white;
+    font-family: "VWAG The Sans", sans-serif;
+    font-size: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 30px;
+    border: 1px solid #a41a4c;
+}
+
+.startModalContainer {
+    display: flex;
+    margin: 0 auto;
+    padding-bottom: 50px;
+    padding-top:50px;
+    padding-right: 30px;
+    padding-left: 30px;
+    background-color:rgba(246, 246, 251, 0.8)
+}
+
+.startModalButton {
+    position: absolute;
+    justify-content: center;
+    top: 15px;
+    right: 15px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    width:40px;
+	height:40px;
+    border-radius: 50%;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    background-color: #a41a4c;
+    cursor: pointer;
+}
+.startModalButton:hover {
+    background-color: #601539 !important;
+  }
+
+.startMileage {
+    font-family: "VWAG The Sans", sans-serif;
+    line-height: 27px;
+    font-weight: 600px;
+    color: #000000;
+    font-size: 24px;
+    padding: 20px;
+}
+
+.submitStart {
+    margin-bottom: 50px;
+}
+
+@media screen and (max-width: 700px) {
+    .vwds-logo-mobile {
+      display: block;
+    }
 }

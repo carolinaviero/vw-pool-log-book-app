@@ -219,28 +219,6 @@ class App extends React.Component {
                 <div className="App">
                     <header className="App-header">
                         <Switch>
-                            {isStartModalVisible && (
-                                <StartModal
-                                    type={typeOfModal}
-                                    trip={selectedTrip}
-                                    isModalVisible={isStartModalVisible}
-                                    handleModalVisibility={
-                                        this.handleEditModalVisibility
-                                    }
-                                    onEditTripSubmit={this.editTripHandler}
-                                />
-                            )}
-
-                            {isMapModalVisible && (
-                                <MapModal
-                                    trip={selectedTrip}
-                                    isModalVisible={isMapModalVisible}
-                                    handleModalVisibility={
-                                        this.handleMapModalVisibility
-                                    }
-                                />
-                            )}
-
                             <Route
                                 exact
                                 path="/"
@@ -290,6 +268,27 @@ class App extends React.Component {
                         CREATED AT THE WILD CODE SCHOOL LISBON HACKATHON FOR
                         VWDS, © 2020.
                     </footer>
+                    {isStartModalVisible && (
+                        <StartModal
+                            type={typeOfModal}
+                            trip={selectedTrip}
+                            isModalVisible={isStartModalVisible}
+                            handleModalVisibility={
+                                this.handleEditModalVisibility
+                            }
+                            onEditTripSubmit={this.editTripHandler}
+                        />
+                    )}
+
+                    {isMapModalVisible && (
+                        <MapModal
+                            trip={selectedTrip}
+                            isModalVisible={isMapModalVisible}
+                            handleModalVisibility={
+                                this.handleMapModalVisibility
+                            }
+                        />
+                    )}
                 </div>
             </>
         );

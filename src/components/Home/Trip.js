@@ -1,6 +1,9 @@
 import React from "react";
 import "./Trip.css";
 import moment from "moment";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+ 
 
 class Trip extends React.Component {
     hasTripStartedButNotFinished = trip => {
@@ -76,45 +79,58 @@ class Trip extends React.Component {
                                 {moment(end_trip).format("D MMM YYYY")}
                             </div>
                         </div>
-                        <div className="trip-card-start-trip">
-                            <div
-                                className={
-                                    this.hasTripStartedButNotFinished(trip) ||
-                                    this.isTripFinished(trip)
-                                        ? "button hideButton"
-                                        : "button"
-                                }
-                                onClick={() =>
-                                    this.editModalVisibilityHelper(
-                                        true,
-                                        trip,
-                                        "start"
-                                    )
-                                }
-                            >
-                                START TRIP
+                        {
+                            this.isTripFinished(trip) ?
+                            <div className="trip-card-end-trip">
+                                <div id="completed-trip-text">
+                                    <FontAwesomeIcon 
+                                    icon={faCheck}
+                                    color={"#73b504"} />  Completed
+                                </div>
                             </div>
-                        </div>
-                        <div className="trip-card-end-trip">
-                            {" "}
-                            <div
-                                className={
-                                    this.isTripFinished(trip) ||
-                                    !this.hasTripStartedButNotFinished(trip)
-                                        ? "button hideButton"
-                                        : "button"
-                                }
-                                onClick={() =>
-                                    this.editModalVisibilityHelper(
-                                        true,
-                                        trip,
-                                        "end"
-                                    )
-                                }
-                            >
-                                END TRIP
+                            :
+                            <>
+                            <div className="trip-card-start-trip">
+                                <div
+                                    className={
+                                        this.hasTripStartedButNotFinished(trip) ||
+                                        this.isTripFinished(trip)
+                                            ? "button hideButton"
+                                            : "button"
+                                    }
+                                    onClick={() =>
+                                        this.editModalVisibilityHelper(
+                                            true,
+                                            trip,
+                                            "start"
+                                        )
+                                    }
+                                >
+                                    START TRIP
+                                </div>
                             </div>
-                        </div>
+                            <div className="trip-card-end-trip">
+                                {" "}
+                                <div
+                                    className={
+                                        this.isTripFinished(trip) ||
+                                        !this.hasTripStartedButNotFinished(trip)
+                                            ? "button hideButton"
+                                            : "button"
+                                    }
+                                    onClick={() =>
+                                        this.editModalVisibilityHelper(
+                                            true,
+                                            trip,
+                                            "end"
+                                        )
+                                    }
+                                >
+                                    END TRIP
+                                </div>
+                            </div>
+                            </>
+                        }
                     </div>
                 </div>
             </>

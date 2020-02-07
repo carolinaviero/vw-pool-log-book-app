@@ -2,7 +2,7 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import "./BookTrip.css";
 import { Element, animateScroll as scroll, scroller } from "react-scroll";
-import moment from "moment";
+import moment, { now } from "moment";
 
 class BookTrip extends React.Component {
   state = {
@@ -104,6 +104,7 @@ class BookTrip extends React.Component {
               id="date"
               type="date"
               name="date"
+              min={moment().format("YYYY-MM-DD")}
               value={date}
             />
             <label htmlFor="startTime">Start time: </label>
@@ -111,6 +112,7 @@ class BookTrip extends React.Component {
               onChange={this.handleInputChange}
               id="startTime"
               type="time"
+              min={moment().format("HH:mm")}
               name="startTime"
               value={startTime}
             />
@@ -119,6 +121,7 @@ class BookTrip extends React.Component {
               onChange={this.handleInputChange}
               id="endTime"
               type="time"
+              min={moment().format("HH:mm")}
               name="endTime"
               value={endTime}
             />

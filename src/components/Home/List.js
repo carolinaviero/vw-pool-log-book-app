@@ -65,10 +65,7 @@ class List extends React.Component {
 
     return (
       <>
-        {/* <p>
-          <em>Sorted by date</em>
-        </p> */}
-        <div>
+        <div id="reservations-query-text-div">
           <p>
             <em>{this.props.trips.length} reservations matching your query</em>
           </p>

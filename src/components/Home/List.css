@@ -33,3 +33,7 @@
 #page-numbers .active {
   color: #a41a4c;
 }
+
+#reservations-query-text-div {
+  margin: -5px;
+}

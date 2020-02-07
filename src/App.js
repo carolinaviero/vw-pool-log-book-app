@@ -7,11 +7,8 @@ import Home from "./components/Home/Home";
 import BookTrip from "./components/BookTrip/BookTrip";
 import MapModal from "./components/Home/MapModal";
 import StartModal from "./components/Home/StartModal";
-import {
-    tripsHelperFn,
-    startTripHelperFn,
-    bookingHelperFn
-} from "./helpers/tripsHelper";
+import Success from "./components/SuccessSignposting/Success";
+import { tripsHelperFn, startTripHelperFn, bookingHelperFn } from "./helpers/tripsHelper";
 
 class App extends React.Component {
     constructor(props) {
@@ -19,6 +16,7 @@ class App extends React.Component {
         this.state = {
             trips: [],
             cars: [],
+            trip: {},
             availableCars: [],
             filterByDriver: "all",
             sortByDate: "desc",
@@ -139,9 +137,12 @@ class App extends React.Component {
     };
 
     handleOnBooking = trip => {
+        // save trip in DB
         bookingHelperFn(trip);
+        // optimistically update the state
         this.setState(prevState => ({
             ...prevState,
+            trip,
             trips: [trip, ...prevState.trips]
         }));
     };
@@ -189,6 +190,7 @@ class App extends React.Component {
         const {
             trips,
             availableCars,
+            trip,
             filterByDriver,
             isMapModalVisible,
             isStartModalVisible,
@@ -238,16 +240,10 @@ class App extends React.Component {
                                                 : []
                                         }
                                         onSortByDate={this.handleSortByDate}
-                                        onFilterByDriver={
-                                            this.handleFilterByDriver
-                                        }
+                                        onFilterByDriver={this.handleFilterByDriver}
                                         isMapModalVisible={isMapModalVisible}
-                                        handleMapModalVisibility={
-                                            this.handleMapModalVisibility
-                                        }
-                                        handleEditModalVisibility={
-                                            this.handleEditModalVisibility
-                                        }
+                                        handleMapModalVisibility={this.handleMapModalVisibility}
+                                        handleEditModalVisibility={this.handleEditModalVisibility}
                                     />
                                 )}
                             />
@@ -258,19 +254,36 @@ class App extends React.Component {
                                     <BookTrip
                                         handleDateSubmit={this.handleDateSubmit}
                                         availableCars={availableCars}
-                                        cleanAvailableCars={
-                                            this.cleanAvailableCars
-                                        }
+                                        cleanAvailableCars={this.cleanAvailableCars}
                                         onBooking={this.handleOnBooking}
                                     />
                                 )}
                             />
+
+                            
+                            <Route
+                                exact
+                                path="/bookingsuccess"
+                                render={() => (
+                                <Success
+                                    header={"You've booked a car!"}
+                                    subheader={"We've got you covered."}
+                                    paragraph={`Once you get in the car, find your trip in Current Trips, and just tap START TRIP. Enter the start mileage from the car's dial, then you're ready to drive!`}
+                                    trip={trip}
+                                    buttontext={"OK"}
+                                    buttonlinkdestination={"/"}
+                                />
+                                )}
+                            />
+
                         </Switch>
                     </header>
+
                     <footer>
                         CREATED AT THE WILD CODE SCHOOL LISBON HACKATHON FOR
                         VWDS, © 2020.
                     </footer>
+
                     {isStartModalVisible && (
                         <StartModal
                             type={typeOfModal}

@@ -19,7 +19,11 @@ class Trip extends React.Component {
     };
 
     editModalVisibilityHelper = (bool, trip, type) => {
-        this.props.handleEditModalVisibility(bool, trip, type);
+        if (type === "end" && this.hasTripStartedButNotFinished(trip)) {
+            this.props.handleEditModalVisibility(bool, trip, type);
+        } else if (type === "start" && !this.hasTripStartedButNotFinished(trip)) {
+            this.props.handleEditModalVisibility(bool, trip, type);
+        }
     };
 
     render() {
@@ -113,18 +117,11 @@ class Trip extends React.Component {
                                 {" "}
                                 <div
                                     className={
-                                        this.isTripFinished(trip) ||
-                                        !this.hasTripStartedButNotFinished(trip)
+                                        this.isTripFinished(trip) || !this.hasTripStartedButNotFinished(trip)
                                             ? "button hideButton"
                                             : "button"
                                     }
-                                    onClick={() =>
-                                        this.editModalVisibilityHelper(
-                                            true,
-                                            trip,
-                                            "end"
-                                        )
-                                    }
+                                    onClick={() => this.editModalVisibilityHelper(true, trip, "end")}
                                 >
                                     END TRIP
                                 </div>

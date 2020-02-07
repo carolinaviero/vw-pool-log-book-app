@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import List from "./List";
 import "./Home.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 
 class Home extends React.Component {
   handleFilterByDriver = e => {
@@ -27,15 +25,16 @@ class Home extends React.Component {
     return (
       <>
         <h1>VWDS Car Pool</h1>
-        <div className="button">
-          <Link to="/booking">BOOK A TRIP</Link>
-        </div>
-        <br />
-        <div className="button">
-          <Link to="/metrics">METRICS</Link>
+        <div className="menu-buttons-div">
+            <div className="menu-buttons">
+            <Link to="/booking">BOOK A TRIP</Link>
+            </div>
+            <br />
+            <div className="menu-buttons">
+            <Link to="/metrics">METRICS</Link>
+            </div>
         </div>
 
-        <br />
         <h2>Current Trips</h2>
 
         <div>

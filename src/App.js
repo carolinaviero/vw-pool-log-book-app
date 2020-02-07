@@ -9,7 +9,12 @@ import MapModal from "./components/Home/MapModal";
 import StartModal from "./components/Home/StartModal";
 import Success from "./components/SuccessSignposting/Success";
 import TripMetrics from "./components/Home/TripMetrics";
-import { tripsHelperFn, startTripHelperFn, bookingHelperFn, metricsHelperFn } from "./helpers/tripsHelper";
+import {
+    tripsHelperFn,
+    startTripHelperFn,
+    bookingHelperFn,
+    metricsHelperFn
+} from "./helpers/tripsHelper";
 
 class App extends React.Component {
     constructor(props) {
@@ -24,7 +29,7 @@ class App extends React.Component {
             isMapModalVisible: false,
             isStartModalVisible: false,
             selectedTrip: {},
-            typeOfModal: "",
+            typeOfModal: ""
         };
     }
 
@@ -80,8 +85,12 @@ class App extends React.Component {
     // Boonking trips
     handleDateSubmit = (date, startTime, endTime) => {
         // format date strings
-        const startTrip = moment(`${date} ${startTime}`).format("YYYY-MM-DD HH:mm:ss");
-        const endTrip = moment(`${date} ${endTime}`).format("YYYY-MM-DD HH:mm:ss");
+        const startTrip = moment(`${date} ${startTime}`).format(
+            "YYYY-MM-DD HH:mm:ss"
+        );
+        const endTrip = moment(`${date} ${endTime}`).format(
+            "YYYY-MM-DD HH:mm:ss"
+        );
         const now = moment().format("YYYY-MM-DD HH:mm:ss");
 
         // TODO: alienate to helper file
@@ -102,7 +111,10 @@ class App extends React.Component {
         // TODO alienate to helper file
         let unavailableCarIds = [];
         // check if bookedDatesByCar is not an empty obj (which will happen with an empty DB) and is not composed of empty arrays (no future trips booked)
-        if (Object.keys(bookedDatesByCar).length > 0 && Object.values(bookedDatesByCar).some(date => date.length > 0)) {
+        if (
+            Object.keys(bookedDatesByCar).length > 0 &&
+            Object.values(bookedDatesByCar).some(date => date.length > 0)
+        ) {
             for (const key in bookedDatesByCar) {
                 for (let i = 0; i < bookedDatesByCar[key].length; i++) {
                     const currentCarStartTrip = moment(
@@ -126,15 +138,20 @@ class App extends React.Component {
                         if (!unavailableCarIds.includes(Number(key)))
                             unavailableCarIds.push(Number(key));
                     }
-    
+
                     this.setState(prevState => ({
                         ...prevState,
-                        availableCars: prevState.cars.filter(car => !unavailableCarIds.includes(car.id))
+                        availableCars: prevState.cars.filter(
+                            car => !unavailableCarIds.includes(car.id)
+                        )
                     }));
                 }
             }
         } else {
-            this.setState(prevState => ({ ...prevState, availableCars: prevState.cars }));
+            this.setState(prevState => ({
+                ...prevState,
+                availableCars: prevState.cars
+            }));
         }
     };
 
@@ -197,7 +214,8 @@ class App extends React.Component {
             isMapModalVisible,
             isStartModalVisible,
             typeOfModal,
-            selectedTrip
+            selectedTrip,
+            sortByDate
         } = this.state;
 
         return (
@@ -209,8 +227,7 @@ class App extends React.Component {
                             src="images/logo_vwds_header@2x.png"
                             alt="VW Digital Solutions logo"
                             width="225"
-                            height="36"
-                        ></img>
+                            height="36"></img>
                     </Link>
                     <Link to="/">
                         <img
@@ -218,8 +235,7 @@ class App extends React.Component {
                             src="images/logo-mobile.png"
                             alt="VW Digital Solutions logo"
                             width="36"
-                            height="36"
-                        ></img>
+                            height="36"></img>
                     </Link>
                 </nav>
 
@@ -241,11 +257,18 @@ class App extends React.Component {
                                                   )
                                                 : []
                                         }
+                                        sortByDate={sortByDate}
                                         onSortByDate={this.handleSortByDate}
-                                        onFilterByDriver={this.handleFilterByDriver}
+                                        onFilterByDriver={
+                                            this.handleFilterByDriver
+                                        }
                                         isMapModalVisible={isMapModalVisible}
-                                        handleMapModalVisibility={this.handleMapModalVisibility}
-                                        handleEditModalVisibility={this.handleEditModalVisibility}
+                                        handleMapModalVisibility={
+                                            this.handleMapModalVisibility
+                                        }
+                                        handleEditModalVisibility={
+                                            this.handleEditModalVisibility
+                                        }
                                     />
                                 )}
                             />
@@ -256,25 +279,11 @@ class App extends React.Component {
                                     <BookTrip
                                         handleDateSubmit={this.handleDateSubmit}
                                         availableCars={availableCars}
-                                        cleanAvailableCars={this.cleanAvailableCars}
+                                        cleanAvailableCars={
+                                            this.cleanAvailableCars
+                                        }
                                         onBooking={this.handleOnBooking}
                                     />
-                                )}
-                            />
-
-                            
-                            <Route
-                                exact
-                                path="/bookingsuccess"
-                                render={() => (
-                                <Success
-                                    header={"You've booked a car!"}
-                                    subheader={"We've got you covered."}
-                                    paragraph={`Once you get in the car, find your trip in Current Trips, and just tap START TRIP. Enter the start mileage from the car's dial, then you're ready to drive!`}
-                                    trip={trip}
-                                    buttontext={"OK"}
-                                    buttonlinkdestination={"/"}
-                                />
                                 )}
                             />
 
@@ -285,13 +294,27 @@ class App extends React.Component {
                                     <TripMetrics
                                         handleDateSubmit={this.handleDateSubmit}
                                         availableCars={availableCars}
-                                        cleanAvailableCars={this.cleanAvailableCars}
+                                        cleanAvailableCars={
+                                            this.cleanAvailableCars
+                                        }
                                         onBooking={this.handleOnBooking}
                                     />
                                 )}
                             />
 
-
+                            <Route
+                                exact
+                                path="/starttripsuccess"
+                                render={() => (
+                                    <Success
+                                        header={"You've booked a car!"}
+                                        subheader={"We've got you covered."}
+                                        paragraph={`Once you get in the car, find your trip in Current Trips, and just tap START TRIP. Enter the start mileage from the car's dial, then you're ready to drive!`}
+                                        buttontext={"OK"}
+                                        buttonlinkdestination={"/"}
+                                    />
+                                )}
+                            />
                         </Switch>
                     </header>
 

@@ -30,8 +30,8 @@
   cursor: pointer;
   margin: 7px;
   display: grid;
-  max-width: 298px;
-  max-height: 194px;
+  width: 298px;
+  height: 194px;
   grid-template-columns: repeat(auto-fit, 6, 1fr);
   grid-template-rows: repeat(auto-fit, 3, 1fr);
   grid-column-gap: 0px;
@@ -61,7 +61,7 @@
   color: black;
 }
 
-.license-plate {
+.license-plate{
   color: #7a7a7a;
   font-weight: 100px !important;
 }
@@ -153,4 +153,12 @@
 .hideButton { 
   opacity: .5;
   cursor: none!important;
+}
+
+#completed-trip-text{
+  border: 1px solid #DCDCDC;
+  padding: 5px;
+  border-radius: 5px;
+  color: #7a7a7a;
+  text-transform: uppercase;
 }

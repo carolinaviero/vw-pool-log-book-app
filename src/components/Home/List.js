@@ -70,7 +70,11 @@ class List extends React.Component {
         </p> */}
         <div>
           <p>
-            <em>{this.props.trips.length} reservations matching your query</em>
+            <em>
+              {this.props.trips.length > 1
+                ? `${this.props.trips.length} reservations matching your query`
+                : `There is only one reservation matching your query.`}
+            </em>
           </p>
         </div>
         <div className="listContainer">

@@ -22,7 +22,7 @@ class Trip extends React.Component {
     };
 
     render() {
-        const { trip, handleModalVisibility } = this.props;
+        const { trip, handleMapModalVisibility } = this.props;
         const {
             id,
             img_url,
@@ -64,7 +64,7 @@ class Trip extends React.Component {
                             <div
                                 class="viewmaplink"
                                 onClick={() =>
-                                    handleModalVisibility(true, trip)
+                                    handleMapModalVisibility(true, trip)
                                 }
                             >
                                 VIEW ROUTE >

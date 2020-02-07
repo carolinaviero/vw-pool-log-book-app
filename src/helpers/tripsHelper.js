@@ -40,4 +40,21 @@ export const bookingHelperFn = async(trip) => {
     } catch(e) {
         console.log(e);
     }
-}
+};
+
+export const metricsHelperFn = async() => {
+    try {
+        const options = {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json"
+            },
+        };
+        const rawResponse = await fetch(`http://localhost:3001/trip/metrics`, options);
+        const response = await rawResponse.json();
+        console.log(response);
+        return response;
+    } catch(e) {
+        console.log(e);
+    }
+};

@@ -8,7 +8,8 @@ import BookTrip from "./components/BookTrip/BookTrip";
 import MapModal from "./components/Home/MapModal";
 import StartModal from "./components/Home/StartModal";
 import Success from "./components/SuccessSignposting/Success";
-import { tripsHelperFn, startTripHelperFn, bookingHelperFn } from "./helpers/tripsHelper";
+import TripMetrics from "./components/Home/TripMetrics";
+import { tripsHelperFn, startTripHelperFn, bookingHelperFn, metricsHelperFn } from "./helpers/tripsHelper";
 
 class App extends React.Component {
     constructor(props) {
@@ -23,12 +24,13 @@ class App extends React.Component {
             isMapModalVisible: false,
             isStartModalVisible: false,
             selectedTrip: {},
-            typeOfModal: ""
+            typeOfModal: "",
         };
     }
 
     async componentDidMount() {
         const { trips, cars } = await tripsHelperFn();
+        const { driverMetrics, carMetrics } = await metricsHelperFn();
         this.setState({ trips, cars });
     }
 
@@ -275,6 +277,20 @@ class App extends React.Component {
                                 />
                                 )}
                             />
+
+                            <Route
+                                exact
+                                path="/trip-metrics"
+                                render={() => (
+                                    <TripMetrics
+                                        handleDateSubmit={this.handleDateSubmit}
+                                        availableCars={availableCars}
+                                        cleanAvailableCars={this.cleanAvailableCars}
+                                        onBooking={this.handleOnBooking}
+                                    />
+                                )}
+                            />
+
 
                         </Switch>
                     </header>

@@ -112,10 +112,25 @@ a {
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
+
 .button:hover:before,
 .button:focus:before,
 .hvr-underline-from-left:active:before {
   right: 0;
+}
+
+/* remove animations from inactive styles */
+.hideButton {
+  background-color: #a41a4c;
+  width: 130px;
+  margin: 0 auto;
+  line-height: 28px;
+  margin-top: 2%;
+  margin-bottom: 2%;
+
+  opacity: 0.5;
+  cursor: inherit;
+  text-decoration: none !important;
 }
 
 ul {

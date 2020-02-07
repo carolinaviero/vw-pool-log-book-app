@@ -8,7 +8,6 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 // this should also include trip info, take from state. button on the end should lead to home
 class Success extends React.Component {
     render() {
-        console.log(this.props.trip);
         if (!this.props.trip)
             return (
                 <>

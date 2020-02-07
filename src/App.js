@@ -34,13 +34,10 @@ class App extends React.Component {
     }
 
     async componentDidMount() {
+        scroll.scrollToTop();
         const { trips, cars } = await tripsHelperFn();
         const { driverMetrics, carMetrics } = await metricsHelperFn();
         this.setState({ trips, cars });
-    }
-
-    componentDidUpdate() {
-        scroll.scrollToTop();
     }
 
     // Handle modals visibility
@@ -304,7 +301,7 @@ class App extends React.Component {
 
                             <Route
                                 exact
-                                path="/starttripsuccess"
+                                path="/bookingsuccess"
                                 render={() => (
                                     <Success
                                         header={"You've booked a car!"}
@@ -312,6 +309,7 @@ class App extends React.Component {
                                         paragraph={`Once you get in the car, find your trip in Current Trips, and just tap START TRIP. Enter the start mileage from the car's dial, then you're ready to drive!`}
                                         buttontext={"OK"}
                                         buttonlinkdestination={"/"}
+                                        trip={trip}
                                     />
                                 )}
                             />

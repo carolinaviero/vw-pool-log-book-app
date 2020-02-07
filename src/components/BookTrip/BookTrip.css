@@ -17,6 +17,7 @@ input {
 
 .submit-button:hover {
   background-color: #601539 !important;
+  cursor: pointer;
 }
 
 .submit-button {

@@ -105,12 +105,10 @@
     font-weight: 600px;
     color: #000000;
     font-size: 24px;
+    margin: 10px 0px;
 }
 
 .submitStart {
     margin-bottom: 50px;
 }
 
-label {
-    margin: 10px 0px;
-}

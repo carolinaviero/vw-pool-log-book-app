@@ -6,11 +6,11 @@ import moment, { now } from "moment";
 
 class BookTrip extends React.Component {
   state = {
-    date: "2020-03-05",
-    startTime: "15:00",
-    endTime: "19:00",
-    driver: "Nuno",
-    destination: "Porto",
+    date: "",
+    startTime: "",
+    endTime: "",
+    driver: "",
+    destination: "",
     showMessage: false
   };
 
@@ -112,7 +112,6 @@ class BookTrip extends React.Component {
               onChange={this.handleInputChange}
               id="startTime"
               type="time"
-              min={moment().format("HH:mm")}
               name="startTime"
               value={startTime}
             />

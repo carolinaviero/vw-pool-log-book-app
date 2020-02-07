@@ -3,8 +3,7 @@
     margin: 0 auto;
     padding-right: 20px;
     padding-left: 20px;
-    padding-bottom: 50px;
-    background-color:rgba(246, 246, 251, 0.2)
+    background-color:rgba(246, 246, 251, 0.2);
 }
 
 .mapModalButton {
@@ -13,7 +12,7 @@
     padding-left: 15px;
     top: 15px;
     color: white;
-    font-size: 16px;
+    font-size: 26px;
     font-weight: bold;
     width:40px;
 	height:40px;
@@ -22,6 +21,7 @@
     margin: 0;
     padding: 0;
     background-color: #a41a4c;
+    border-color: #a41a4c;
     cursor: pointer;
 }
 
@@ -83,7 +83,7 @@
     top: 15px;
     right: 15px;
     color: white;
-    font-size: 16px;
+    font-size: 26px;
     font-weight: bold;
     width:40px;
 	height:40px;
@@ -93,6 +93,7 @@
     padding: 0;
     background-color: #a41a4c;
     cursor: pointer;
+    border-color: #a41a4c;
 }
 .startModalButton:hover {
     background-color: #601539 !important;
@@ -104,9 +105,12 @@
     font-weight: 600px;
     color: #000000;
     font-size: 24px;
-    padding: 20px;
 }
 
 .submitStart {
     margin-bottom: 50px;
+}
+
+label {
+    margin: 10px 0px;
 }

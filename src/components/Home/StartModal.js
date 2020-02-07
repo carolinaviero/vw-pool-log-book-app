@@ -1,23 +1,18 @@
 import React from "react";
 import "./MapModal.css";
 import Modal from "react-modal";
-import { Redirect } from "react-router-dom";
-
-
 
 
 const customStyles = {
     content: {
         width: "100%",
-        height: "vh100",
+        height: "100%",
         border: 0,
         top: 0,
         left: 0,
         right: "auto",
         bottom: "auto",
         padding: 0,
-        // marginRight: "-50%",
-        // transform: "translate(-50%, -50%)"
     }
 };
 
@@ -47,18 +42,14 @@ class StartModal extends React.Component {
             <>
                 <Modal
                     isOpen={isModalVisible}
-                    // onAfterOpen={afterOpenModal}
-                    // onRequestClose={closeModal}
                     style={customStyles}
-                    // contentLabel="Example Modal"
-                    className="startModalContainer"
-                >
+                    className="startModalContainer">
                     <button className="startModalButton" onClick={() => handleModalVisibility(false)}>
                         &times;
                     </button>
                     <form onSubmit={this.handleOnSubmit}>
                         <label htmlFor="startMileage" className="startMileage">
-                            {type === "start" ? `Insert initial car mileage`: `Insert final car mileage` }
+                            {type === "start" ? `Insert initial car mileage:`: `Insert final car mileage:` }
                         </label>
                         <input onChange={this.handleInputChange} id="startMileage" type="number" value={mileage} min={initialMil + 1} />
                         <input className="submit-button submitStart" type="submit" value="DONE"></input>

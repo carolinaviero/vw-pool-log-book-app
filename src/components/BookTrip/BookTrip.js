@@ -82,7 +82,7 @@ class BookTrip extends React.Component {
                     {
                         availableCars.length > 1 ?  
                         <div className="available-cars-text">
-                            <h2>{availableCars.length} available cars for selected dates:</h2> 
+                            <h2>{availableCars.length} available cars for selected date:</h2> 
                         </div>
                         : 
                         <div className="available-cars-text">

@@ -1,10 +1,6 @@
 import React from "react";
 import "./MapModal.css";
 import Modal from "react-modal";
-import { Redirect } from "react-router-dom";
-
-
-
 
 const customStyles = {
     content: {
@@ -60,7 +56,7 @@ class StartModal extends React.Component {
                         <label htmlFor="startMileage" className="startMileage">
                             {type === "start" ? `Insert initial car mileage`: `Insert final car mileage` }
                         </label>
-                        <input onChange={this.handleInputChange} id="startMileage" type="number" value={mileage} min={initialMil + 1} />
+                        <input onChange={this.handleInputChange} id="startMileage" type="number" value={mileage} min={+initialMil + 1} />
                         <input className="submit-button submitStart" type="submit" value="DONE"></input>
                     </form>
 

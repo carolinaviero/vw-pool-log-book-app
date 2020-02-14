@@ -165,6 +165,7 @@ class App extends React.Component {
         // optimistically update the state
         this.setState(prevState => ({
             ...prevState,
+            filterByDriver: "all",
             trip,
             trips: [trip, ...prevState.trips]
         }));
@@ -208,6 +209,15 @@ class App extends React.Component {
             };
         });
     };
+
+    // Get last trip mileage by car
+    lastTripEndMileage = () => {
+        const { trips, selectedTrip } = this.state;
+        // get the trips that have finished and were done with the car from current trip, sort by date desc and get the first el
+        const lastTrip = trips.filter(trip => trip.car_id === selectedTrip.car_id && trip.car_start_mileage < trip.car_end_mileage)
+            .sort((a, b) => moment(b.end_trip) - moment(a.end_trip))[0]
+        return lastTrip.car_end_mileage;
+    }
 
     render() {
         const {
@@ -329,6 +339,7 @@ class App extends React.Component {
 
                     {isStartModalVisible && (
                         <StartModal
+                            lastKnownMileage={this.lastTripEndMileage()}
                             type={typeOfModal}
                             trip={selectedTrip}
                             isModalVisible={isStartModalVisible}

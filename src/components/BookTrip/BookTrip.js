@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import "./BookTrip.css";
-import { Element, animateScroll as scroll, scroller } from "react-scroll";
-import moment, { now } from "moment";
+import { Element, scroller } from "react-scroll";
+import moment from "moment";
 
 class BookTrip extends React.Component {
   state = {
@@ -19,7 +19,8 @@ class BookTrip extends React.Component {
   }
 
   handleInputChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.props.cleanAvailableCars();
+    this.setState({ [e.target.name]: e.target.value, showMessage: false });
   };
 
   renderAvailableCars = e => {
@@ -51,8 +52,6 @@ class BookTrip extends React.Component {
     this.props.onBooking(newBooking);
     this.props.history.push("/bookingsuccess");
   };
-
-  scrollToTop = () => scroll.scrollToTop();
 
   scrollTo = () => {
     scroller.scrollTo("scroll-to-element", {
@@ -112,6 +111,8 @@ class BookTrip extends React.Component {
               onChange={this.handleInputChange}
               id="startTime"
               type="time"
+              // no lesser than de current moment
+              min={date === moment().format("YYYY-MM-DD") ? moment().format("HH:mm") : null}
               name="startTime"
               value={startTime}
             />
@@ -120,7 +121,8 @@ class BookTrip extends React.Component {
               onChange={this.handleInputChange}
               id="endTime"
               type="time"
-              min={moment().format("HH:mm")}
+              // no lesser than start trip moment plus 15min
+              min={moment(`${date} ${startTime}:00`).add(15, "m").format("HH:mm")}
               name="endTime"
               value={endTime}
             />

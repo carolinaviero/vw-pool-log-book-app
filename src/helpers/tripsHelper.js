@@ -1,6 +1,6 @@
 export const tripsHelperFn = async () => {
     try {
-        const rawResponse = await fetch(`https://vw-carpool-backend.herokuapp.com`);
+        const rawResponse = await fetch(`https://vw-carpool-backend.herokuapp.com/trip`);
         const response = await rawResponse.json();
         return response;
     } catch (e) {
@@ -18,7 +18,7 @@ export const startTripHelperFn = async (trip) => {
             method: "PUT",
             body: JSON.stringify(trip)
         };
-        const response = await fetch(`https://vw-carpool-backend.herokuapp.com/edit/${trip.id}`, options);
+        const response = await fetch(`https://vw-carpool-backend.herokuapp.com/trip/edit/${trip.id}`, options);
         return response;
     } catch(e) {
         console.log(e);
@@ -35,7 +35,7 @@ export const bookingHelperFn = async(trip) => {
             method: "POST",
             body: JSON.stringify(trip)
         };
-        const response = await fetch(`https://vw-carpool-backend.herokuapp.com/create`, options);
+        const response = await fetch(`https://vw-carpool-backend.herokuapp.com/trip/create`, options);
         return response;
     } catch(e) {
         console.log(e);
@@ -50,7 +50,7 @@ export const metricsHelperFn = async() => {
                 "Content-Type": "application/json"
             },
         };
-        const rawResponse = await fetch(`https://vw-carpool-backend.herokuapp.com/metrics`, options);
+        const rawResponse = await fetch(`https://vw-carpool-backend.herokuapp.com/trip/metrics`, options);
         const response = await rawResponse.json();
         console.log(response);
         return response;

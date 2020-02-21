@@ -73,6 +73,8 @@ class BookTrip extends React.Component {
     } = this.state;
     const { availableCars } = this.props;
 
+    console.log(`${date} ${startTime}:00`)
+
     return (
       <>
         <h1>Book your Trip</h1>
@@ -123,7 +125,7 @@ class BookTrip extends React.Component {
               id="endTime"
               type="time"
               // no lesser than start trip moment plus 15min
-              min={moment(`${date} ${startTime}:00`).add(15, "m").format("HH:mm")}
+              min={date && startTime ? moment(`${date} ${startTime}:00`).add(15, "m").format("HH:mm") : null}
               name="endTime"
               value={endTime}
             />

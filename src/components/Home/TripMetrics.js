@@ -50,18 +50,16 @@ class TripMetrics extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {carMetrics.length &&
+            {carMetrics.length ? 
               carMetrics
                 .filter(metric => metric.plate === filterByCar)
-                .map(metric => (
-                  <tr>
-                    <td>
-                      {moment(metric.month, "M").format("MMM") +
-                        ` - ${metric.year}`}
-                    </td>
+                .map((metric, idx) => (
+                  <tr key={idx}>
+                    <td>{`${moment(metric.month, "M").format("MMM")} - ${metric.year}`}</td>
                     <td>{metric.totalMileage}</td>
                   </tr>
-                ))}
+                ))
+              : null}
           </tbody>
         </table>
       </>

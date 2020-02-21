@@ -52,7 +52,6 @@ export const metricsHelperFn = async() => {
         };
         const rawResponse = await fetch(`https://vw-carpool-backend.herokuapp.com/trip/metrics`, options);
         const response = await rawResponse.json();
-        console.log(response);
         return response;
     } catch(e) {
         console.log(e);

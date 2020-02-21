@@ -73,8 +73,6 @@ class BookTrip extends React.Component {
     } = this.state;
     const { availableCars } = this.props;
 
-    console.log(`${date} ${startTime}:00`)
-
     return (
       <>
         <h1>Book your Trip</h1>

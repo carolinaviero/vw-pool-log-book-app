@@ -175,6 +175,10 @@ class App extends React.Component {
         this.setState({ availableCars: [] });
     };
 
+    cleanFilterByDriver = () => {
+        this.setState({ filterByDriver: "all" });
+    }
+
     // Start and end trips
     editTripHandler = (trip, mileage, type) => {
         // trip with mileage
@@ -298,6 +302,7 @@ class App extends React.Component {
                                         cleanAvailableCars={
                                             this.cleanAvailableCars
                                         }
+                                        cleanFilterByDriver={this.cleanFilterByDriver}
                                         onBooking={this.handleOnBooking}
                                     />
                                 )}

@@ -16,6 +16,7 @@ class BookTrip extends React.Component {
 
   componentWillUnmount() {
     this.props.cleanAvailableCars();
+    this.props.cleanFilterByDriver();
   }
 
   handleInputChange = e => {
